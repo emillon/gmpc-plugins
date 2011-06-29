@@ -1,0 +1,97 @@
+/* gmpc-tagedit (GMPC plugin)
+ * Copyright (C) 2008-2009 Qball Cow <qball@sarine.nl>
+ * Project homepage: http://gmpcwiki.sarine.nl/
+ 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*/
+
+requires 2.0.0
+
+%a{
+#include <gmpc/gmpc-mpddata-model.h>
+%}
+
+%{
+#include <config.h>
+#include <glib.h>
+#include <glib/gi18n-lib.h>
+#include "tagedit.h"
+%}
+/**
+ * This is a Special version of Gmpc:MpdData:Model that is made to show the current playlist, and keep in sync with it.
+ * This is to replace the old playlist-lis backend.
+ * Use this model with Gmpc:MpdData:Treeview
+ */
+
+class Gmpc:MpdData:Model:Tagedit from Gmpc:MpdData:Model 
+        (interface Gtk:Tree:Model)
+{
+    public
+    GtkTreeModel *new (void)
+    {
+        Self *self = GET_NEW;
+        return self;
+    }
+     /**
+     * "override" the get_value method, because we need to fetch the value before it's available.
+     * So after we fetch it, let the Gmpc:MpdData:Model handle the hard work again.
+     */
+    interface Gtk:Tree:Model
+    private void 
+    get_value(Gtk:Tree:Model *model(check null type), GtkTreeIter *iter (check null), gint column (check >= 0 < MPDDATA_MODEL_N_COLUMNS), GValue *value (check null))
+    {
+        Self *self = GMPC_MPDDATA_MODEL_TAGEDIT(model);
+        MpdData_real *data = iter->user_data;	
+        if(column == MPDDATA_MODEL_COL_ICON_ID)
+        {
+            si *i = data->userdata;
+            g_value_init(value, GMPC_MPDDATA_MODEL(self)->types[column]);
+
+            if(i->changed)
+            {
+                g_value_set_string(value, GTK_STOCK_CANCEL);
+            }
+            else 
+            {
+                g_value_set_string(value, GTK_STOCK_OK);
+            }
+            
+            return;
+        }
+        /**
+         * Call the parent function again
+         */
+        gmpc_mpddata_model_get_value(model, iter, column, value);
+        //PARENT(self)->get_value(model, iter, column, value);
+        //PARENT_HANDLER(model, iter,column,value);
+    }
+    public
+    void
+    revert_song(Gtk:Tree:Model *model(check null type), GtkTreeIter *iter (check null))
+    {
+        MpdData_real *data = iter->user_data;	
+        if(data->userdata)
+        {
+            GtkTreePath *path;
+            si *i = data->userdata;
+            mpd_freeSong(data->song);
+            data->song = mpd_songDup(i->revert);
+            i->changed = 0;
+            path = gtk_tree_model_get_path(model, iter);
+            gtk_tree_model_row_changed(model, path, iter);
+            gtk_tree_path_free(path);
+        }
+    }
+}

@@ -1,0 +1,76 @@
+# Simplified Chinese translation for gmpc
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the gmpc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gmpc\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-03-17 16:41+0100\n"
+"PO-Revision-Date: 2009-05-21 09:15+0000\n"
+"Last-Translator: Yinghua Wang <Unknown>\n"
+"Language-Team: Simplified Chinese <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-08-09 09:52+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../src/plugin.c:107
+msgid "File does not exists"
+msgstr "文件不存在"
+
+#: ../src/plugin.c:112
+msgid "File is read-only"
+msgstr "文件为只读"
+
+#: ../src/plugin.c:180 ../src/plugin.c:248 ../src/plugin.c:824
+msgid "Tag Edit"
+msgstr "标签编辑"
+
+#: ../src/plugin.c:180
+msgid "Failed to save song"
+msgstr "保存歌曲失败"
+
+#: ../src/plugin.c:546
+msgid "Revert changes"
+msgstr "复原更改"
+
+#: ../src/plugin.c:553
+msgid "Edit Columns"
+msgstr "编辑列"
+
+#. title
+#: ../src/plugin.c:619
+msgid "Title"
+msgstr "标题"
+
+#. artist
+#: ../src/plugin.c:626
+msgid "Artist"
+msgstr "艺术家"
+
+#. album
+#: ../src/plugin.c:633
+msgid "Album"
+msgstr "专辑"
+
+#. album
+#: ../src/plugin.c:640
+msgid "Genre"
+msgstr "流派"
+
+#. album
+#: ../src/plugin.c:647
+msgid "Year"
+msgstr "年"
+
+#. album
+#: ../src/plugin.c:655
+msgid "Track"
+msgstr "音轨"
+
+#: ../src/plugin.c:704
+msgid "Tag Editor"
+msgstr "标签编辑器"

@@ -1,0 +1,76 @@
+# Russian translation for gmpc
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the gmpc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gmpc\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-03-17 16:41+0100\n"
+"PO-Revision-Date: 2009-05-06 08:26+0000\n"
+"Last-Translator: julja <ljashechka-ju@mail.ru>\n"
+"Language-Team: Russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-08-09 09:52+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../src/plugin.c:107
+msgid "File does not exists"
+msgstr "Файл не существует"
+
+#: ../src/plugin.c:112
+msgid "File is read-only"
+msgstr "Файл только для чтения"
+
+#: ../src/plugin.c:180 ../src/plugin.c:248 ../src/plugin.c:824
+msgid "Tag Edit"
+msgstr "Редактировать тег"
+
+#: ../src/plugin.c:180
+msgid "Failed to save song"
+msgstr "Ошибка сохранения песни"
+
+#: ../src/plugin.c:546
+msgid "Revert changes"
+msgstr "Отменить изменения"
+
+#: ../src/plugin.c:553
+msgid "Edit Columns"
+msgstr "Изменить столбцы"
+
+#. title
+#: ../src/plugin.c:619
+msgid "Title"
+msgstr "Заголовок"
+
+#. artist
+#: ../src/plugin.c:626
+msgid "Artist"
+msgstr "Исполнитель"
+
+#. album
+#: ../src/plugin.c:633
+msgid "Album"
+msgstr "Альбом"
+
+#. album
+#: ../src/plugin.c:640
+msgid "Genre"
+msgstr "Стиль"
+
+#. album
+#: ../src/plugin.c:647
+msgid "Year"
+msgstr "Год"
+
+#. album
+#: ../src/plugin.c:655
+msgid "Track"
+msgstr "Трек"
+
+#: ../src/plugin.c:704
+msgid "Tag Editor"
+msgstr "Редактор тега"

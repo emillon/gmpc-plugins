@@ -1,0 +1,23 @@
+A bunch of random thoughts, TODOs including features and general fixes.
+
+Legend:
+	[ ] - incomplete
+	[x] - complete
+	[X] - major complete
+	[-] - removed
+	[!] - in progress/half done
+	[?] - completed but may break
+	[_] - deferred, unneeded? 
+
+TODO:
+	[ ] - update statusbar to show timer if playlist is focused
+	[x] - allow spinners to wrap time (seconds affects minutes affects hours) (gtk+ 2.10.x+ only)
+	[x] - fix timer not checking if preference page active before updating label
+	[ ] - fix strange %02d behavior with spinner fields
+	[_] - fix crude variable (prefs_active) for representing if prefs page is visible 
+		- (for updates to countdown label)
+
+Future:
+	[ ] - custom user actions
+	[ ] - better way to schedule time in general?
+		- current uses timeout and checks every second.. :/

@@ -1,0 +1,54 @@
+2007-02-24 17:50  gavin
+
+	* src/Makefile.am: Build fix. Special thanks to avuton for
+	  providing the patch.
+
+2007-02-01 23:21  gavin
+
+	* ChangeLog: Added changelog.
+
+2007-02-01 23:20  gavin
+
+	* src/gmpc-alarm.h, src/plugin.c: Minor fixes to accomodate gmpcs
+	  plugin API changes, replaced g_debug statements with libmpd's own
+	  debug_printf.
+
+2006-06-07 21:26  gavin
+
+	* aclocal.m4, compile, config.guess, config.sub, depcomp,
+	  install-sh, ltmain.sh, missing, mkinstalldirs, src/Makefile.in:
+	  Even more uneeded stuff.
+
+2006-06-07 21:21  gavin
+
+	* Makefile.in, configure: Uneeded files.
+
+2006-06-07 21:21  gavin
+
+	* src/plugin.c: Small fixes.
+
+2006-06-07 13:00  gavin
+
+	* src/plugin.c: Minor changes.
+
+2006-06-06 21:58  gavin
+
+	* README: Propset test.
+
+2006-06-06 21:53  gavin
+
+	* AUTHORS, README, TODO, src/gmpc-alarm.h, src/plugin.c: Fixed
+	  name, added propsets, slightly changed TODOs.
+
+2006-06-06 21:12  gstewart
+
+	* AUTHORS, COPYING, INSTALL, Makefile.am, Makefile.in, README,
+	  TODO, aclocal.m4, autogen.sh, compile, config.guess, config.sub,
+	  configure, configure.ac, depcomp, install-sh, ltmain.sh, missing,
+	  mkinstalldirs, src, src/Makefile.am, src/Makefile.in,
+	  src/gmpc-alarm.h, src/plugin.c: Initial import
+
+2006-06-06 21:08  gstewart
+
+	* .: trunk dir.
+

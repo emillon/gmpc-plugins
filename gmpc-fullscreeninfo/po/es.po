@@ -1,0 +1,31 @@
+# Spanish translation for gmpc
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the gmpc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gmpc\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-03-17 20:01+0100\n"
+"PO-Revision-Date: 2009-06-13 13:12+0000\n"
+"Last-Translator: Juan Alfredo Salas Santillana <Unknown>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-08-09 09:52+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../src/plugin.c:111 ../src/plugin.c:147
+msgid "Gnome Music Player Client"
+msgstr "Reproductor de música de GNOME"
+
+#: ../src/plugin.c:210 ../src/plugin.c:235
+msgid "Fullscreen Info"
+msgstr "Información a pantalla completa"
+
+#: ../src/plugin.c:108
+msgctxt "header title markup"
+msgid "<span size='xx-large'>[[%title% - &[%artist%]]|%shortfile%]</span>"
+msgstr "<span size='xx-large'>[[%title% - &[%artist%]]|%shortfile%]</span>"

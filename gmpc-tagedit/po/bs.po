@@ -1,0 +1,76 @@
+# Bosnian translation for gmpc
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the gmpc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gmpc\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-03-17 16:41+0100\n"
+"PO-Revision-Date: 2009-03-17 23:28+0000\n"
+"Last-Translator: kenan3008 <Unknown>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-08-09 09:52+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#: ../src/plugin.c:107
+msgid "File does not exists"
+msgstr "Fajl ne postoji"
+
+#: ../src/plugin.c:112
+msgid "File is read-only"
+msgstr "Fajl je samo za čitanje"
+
+#: ../src/plugin.c:180 ../src/plugin.c:248 ../src/plugin.c:824
+msgid "Tag Edit"
+msgstr "Uređivanje oznake"
+
+#: ../src/plugin.c:180
+msgid "Failed to save song"
+msgstr "Snimanje pjesme nije uspjelo"
+
+#: ../src/plugin.c:546
+msgid "Revert changes"
+msgstr "Vrati promjene"
+
+#: ../src/plugin.c:553
+msgid "Edit Columns"
+msgstr "Uredi kolone"
+
+#. title
+#: ../src/plugin.c:619
+msgid "Title"
+msgstr "Naslov"
+
+#. artist
+#: ../src/plugin.c:626
+msgid "Artist"
+msgstr "Izvođač"
+
+#. album
+#: ../src/plugin.c:633
+msgid "Album"
+msgstr "Album"
+
+#. album
+#: ../src/plugin.c:640
+msgid "Genre"
+msgstr "Žanr"
+
+#. album
+#: ../src/plugin.c:647
+msgid "Year"
+msgstr "Godina"
+
+#. album
+#: ../src/plugin.c:655
+msgid "Track"
+msgstr "Pjesma"
+
+#: ../src/plugin.c:704
+msgid "Tag Editor"
+msgstr "Uređivač oznaka"

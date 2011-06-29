@@ -1,0 +1,14 @@
+$Id$ 
+gmpc-alarm - basic timer plugin for gmpc 
+Gavin Gilmour (gavin@brokentrain.net)
+
+About
+==========
+
+Plugin for gmpc which allows basic events to be scheduled.
+
+
+Bug reporting: 
+==============
+
+Please report bugs to <gavin@brokentrain.net>
