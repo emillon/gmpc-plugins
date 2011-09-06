@@ -1,3 +1,10 @@
+gmpc-plugins (11.8.16-1) unstable; urgency=low
+
+  * New upstream release
+  * New Maintainer (Closes: #nnnnnn)
+
+ -- Etienne Millon <etienne.millon@gmail.com>  Tue, 06 Sep 2011 13:13:15 +0200
+
 gmpc-plugins (0.20.0-1) unstable; urgency=low
 
   * New upstream release
