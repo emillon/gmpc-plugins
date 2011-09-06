@@ -214,7 +214,7 @@ void avahi_pref_construct(GtkWidget *container)
 	GtkWidget *entry_hbox = gtk_hbox_new(FALSE,3);
 	GtkWidget *entry = gtk_entry_new();
 	GtkWidget *apply = gtk_button_new_from_stock( GTK_STOCK_APPLY );
-    GtkWidget *del_on_remove_ck = gtk_check_button_new_with_label("Remove profile if server dissapears");
+    GtkWidget *del_on_remove_ck = gtk_check_button_new_with_label("Remove profile if server disappears");
 	pref_vbox = gtk_vbox_new(FALSE,6);
 
 

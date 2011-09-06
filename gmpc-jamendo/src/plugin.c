@@ -23,7 +23,6 @@
 #include <config.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <glade/glade.h>
 #include <plugin.h>
 #include <gmpc_easy_download.h>
 #include <metadata.h>
@@ -34,7 +33,7 @@
 #include "jamendo.h"
 #include <libmpd/debug_printf.h>
 
-extern GladeXML *pl3_xml;
+extern GtkBuilder *pl3_xml;
 
 gmpcPlugin plugin;
 /**
@@ -110,7 +109,6 @@ GtkTreeModel *mt_store = NULL;
 GtkWidget *treeviews[3] = {NULL, NULL,NULL};
 
 static GtkWidget *jamendo_logo=NULL;
-extern GladeXML *pl3_xml;
 
 static void jamendo_buy_album()
 {
@@ -149,7 +147,7 @@ static void jamendo_logo_add()
 	logo = gtk_image_new_from_icon_name("jamendo", GTK_ICON_SIZE_DND);
 	gtk_button_set_image(GTK_BUTTON(button), logo);
 	gtk_box_pack_start(GTK_BOX(jamendo_logo), ali, TRUE, TRUE,0);
-	gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(pl3_xml, "vbox5")), jamendo_logo, FALSE,FALSE,0);	
+	gtk_box_pack_end(GTK_BOX(gtk_builder_get_object(pl3_xml, "vbox5")), jamendo_logo, FALSE,FALSE,0);	
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(jamendo_buy_album), NULL);
 	if(song) {
 		if(strstr(song->file,"jamendo.com"))
@@ -520,7 +518,7 @@ int jamendo_end_download()
 
     jamendo_get_genre_list();
 	gtk_widget_hide(jamendo_pb);
-	gtk_widget_set_sensitive(glade_xml_get_widget(pl3_xml, "pl3_win"), TRUE);
+	gtk_widget_set_sensitive(gtk_builder_get_object(pl3_xml, "pl3_win"), TRUE);
     return FALSE;
 }
 typedef struct _Pass{
@@ -564,12 +562,12 @@ static int jamendo_download_xml_callback_real(Pass *p)
 static void jamendo_download()
 {
     downloading = TRUE; 
-    //	gtk_widget_set_sensitive(glade_xml_get_widget(pl3_xml, "pl3_win"), FALSE);
+    //	gtk_widget_set_sensitive(gtk_builder_get_object(pl3_xml, "pl3_win"), FALSE);
     gmpc_mpddata_model_set_mpd_data(GMPC_MPDDATA_MODEL(gtk_tree_view_get_model(GTK_TREE_VIEW(treeviews[0]))),NULL);
 	gtk_widget_show(jamendo_pb);
 	jamendo_db_download_xml(jamendo_download_xml_callback, jamendo_pb);
 //	gtk_widget_hide(jamendo_pb);
-//	gtk_widget_set_sensitive(glade_xml_get_widget(pl3_xml, "pl3_win"), TRUE);
+//	gtk_widget_set_sensitive(gtk_builder_get_object(pl3_xml, "pl3_win"), TRUE);
 }
 */
 static void jamendo_download_cancel(GtkWidget *button)

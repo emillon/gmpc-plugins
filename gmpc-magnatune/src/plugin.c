@@ -23,7 +23,6 @@
 #include <config.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <glade/glade.h>
 #include <plugin.h>
 #include <gmpc_easy_download.h>
 #include <metadata.h>
@@ -35,8 +34,7 @@
 #include "magnatune.h"
 #include <libmpd/debug_printf.h>
 
-extern GladeXML *pl3_xml;
-
+extern GtkBuilder *pl3_xml;
 gmpcPlugin plugin;
 /**
  * Function decleration
@@ -110,7 +108,6 @@ GtkTreeModel *mt_store = NULL;
 GtkWidget *treeviews[3] = {NULL, NULL,NULL};
 
 static GtkWidget *magnatune_logo=NULL;
-extern GladeXML *pl3_xml;
 
 static void magnatune_buy_album()
 {
@@ -150,7 +147,7 @@ static void magnatune_logo_add()
 	logo = gtk_image_new_from_icon_name("magnatune", GTK_ICON_SIZE_DND);
 	gtk_button_set_image(GTK_BUTTON(button), logo);
 	gtk_box_pack_start(GTK_BOX(magnatune_logo), ali, TRUE, TRUE,0);
-	gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(pl3_xml, "vbox5")), magnatune_logo, FALSE,FALSE,0);	
+	gtk_box_pack_end(GTK_BOX(gtk_builder_get_object(pl3_xml, "vbox5")), magnatune_logo, FALSE,FALSE,0);	
 	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(magnatune_buy_album), NULL);
 	if(song) {
 		if(strstr(song->file,"magnatune.com"))

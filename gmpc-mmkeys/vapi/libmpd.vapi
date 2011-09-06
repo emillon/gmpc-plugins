@@ -7,15 +7,20 @@ namespace MPD {
     public class Server {
 
         public MPD.Song playlist_get_song(int songid);
-        public weak MPD.Song playlist_get_current_song();
+        public unowned MPD.Song playlist_get_current_song();
         public int player_get_next_song_id();
-
+        [CCode (cname="mpd_server_get_database_update_time")]
+        public int get_database_update_time();
+        [CCode (cname="mpd_status_db_is_updating")]
+        public bool is_updating_database();
+        [CCode (cname="mpd_server_tag_supported")]
+        public bool tag_supported(MPD.Tag.Type tag);
     }
 
 
     [CCode (cname = "mpd_Song",
-    free_function = "mpd_freeSong", 
-    copy_function = "mpd_songDup", 
+    free_function = "mpd_freeSong",
+    copy_function = "mpd_songDup",
     cheader_filename = "libmpd/libmpdclient.h,libmpd/libmpd.h")]
     [Compact]
     [Immutable]
@@ -37,13 +42,10 @@ namespace MPD {
         public int    time;
         public int    pos;
         public int    id;
-        public time_t mtime;
         [CCode (cname="mpd_songDup")]
         public unowned MPD.Song copy ();
         [CCode (instance_pos = -1)]
         public void markup (char[] buffer, int length, string markup);
-        [CCode (cname = "mpd_freeSong")]
-        public static void free;
     }
     namespace Sticker {
         namespace Song {
@@ -53,7 +55,9 @@ namespace MPD {
         public bool supported(MPD.Server connection);
     }
     namespace Status {
-        [CCode (cname="ChangedStatusType", cprefix = "MPD_CST_", cheader_filename = "libmpd/libmpd.h")]
+        [CCode (cname="ChangedStatusType", cprefix = "MPD_CST_", 
+            cheader_filename = "libmpd/libmpd.h",
+            has_type_id=false)]
             public enum Changed {
                 /** The playlist has changed */
                 PLAYLIST      = 0x0001,
@@ -99,6 +103,13 @@ namespace MPD {
                 SINGLE_MODE         = 0x400000,
                 CONSUME_MODE        = 0x800000
             }
+
+            [CCode (cname="mpd_status_get_bitrate")]
+            public int get_bitrate(MPD.Server server);
+            [CCode (cname="mpd_status_get_samplerate")]
+            public int get_samplerate(MPD.Server server);
+            [CCode (cname="mpd_status_get_channels")]
+            public int get_channels(MPD.Server server);
     }
     namespace Data{
         [CCode (cname="MpdDataType", cprefix = "MPD_DATA_TYPE_", cheader_filename = "libmpd/libmpd.h")]
@@ -110,6 +121,19 @@ namespace MPD {
                 PLAYLIST,
                 OUTPUT_DEV
             }
+    [CCode (cname = "mpd_PlaylistFile",
+    free_function = "mpd_freePlaylistFile",
+    copy_function = "mpd_playlistFileDup",
+    cheader_filename = "libmpd/libmpdclient.h,libmpd/libmpd.h")]
+    [Compact]
+    [Immutable]
+    public class Playlist{
+        [CCode (cname="mpd_newPlaylistFile")]
+        public Playlist();
+
+        public string *path;
+        public string *mtime;
+    }
 
             [CCode (cname = "MpdData",
                 free_function = "mpd_data_free", 
@@ -120,6 +144,7 @@ namespace MPD {
                 public Data.Type type;
                 public MPD.Song  song;
                 public string tag;
+                public Playlist playlist;
               
                 [CCode (cname="mpd_data_get_next")]
                 [ReturnsModifiedPointer ()]
@@ -130,11 +155,20 @@ namespace MPD {
                 [ReturnsModifiedPointer ()]
                 public void sort_album_disc_track();
 
+                [CCode (cname="misc_mpddata_remove_duplicate_songs")]
+                [ReturnsModifiedPointer ()]
+                public void remove_duplicate_songs();
+
                 [CCode (cname="mpd_data_get_next_real")] 
-                public weak Item? next(bool free);
+                [ReturnsModifiedPointer ()]
+                public void next(bool free);
 
                 [CCode (cname="mpd_data_get_first")] 
-                public weak Item? first();
+                public unowned Item? get_first();
+
+                [CCode (cname="mpd_data_get_first")] 
+                [ReturnsModifiedPointer ()]
+                public void first();
 
                 [CCode (cname="mpd_data_concatenate")]
                 [ReturnsModifiedPointer ()]
@@ -165,7 +199,7 @@ namespace MPD {
         public void pause(MPD.Server server);
         public void stop(MPD.Server server);
         public MPD.Player.State get_state(MPD.Server server);
-        [CCode (cprefix="MPD_STATUS_STATE_")]
+        [CCode (cprefix="MPD_STATUS_STATE_", cname="int")]
         public enum State{
             UNKNOWN = 0,
             STOP    = 1,
@@ -176,6 +210,8 @@ namespace MPD {
 
     namespace Database {
         public MPD.Data.Item? get_playlist_content(MPD.Server server, string playlist_name); 
+        [CCode (cname="mpd_database_playlist_list")]
+        public MPD.Data.Item? get_playlist_list(MPD.Server server);
         public void playlist_list_add(MPD.Server server, string playlist_name, string path);
         public void playlist_list_delete(MPD.Server server, string playlist_name, int pos);
 
@@ -188,6 +224,7 @@ namespace MPD {
 
         [CCode (cname="mpd_database_search_add_constraint")]
         public void search_add_constraint(MPD.Server server, MPD.Tag.Type type, string value);
+
     }
 
     namespace Tag {

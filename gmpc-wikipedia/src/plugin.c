@@ -1,7 +1,7 @@
 /* gmpc-wikipedia (GMPC plugin)
  * Copyright (C) 2006-2009 Qball Cow <qball@sarine.nl>
  * Project homepage: http://gmpcwiki.sarine.nl/
- 
+
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -41,6 +41,8 @@
 #include <libmpd/debug_printf.h>
 
 #include <libsoup/soup.h>
+
+#define wikipedia_logdomain "Gmpc.Plugin.WikiPedia"
 static void wp_add(GtkWidget *cat_tree);
 static void wp_selected(GtkWidget *container);
 static void wp_unselected(GtkWidget *container);
@@ -77,7 +79,7 @@ static const gchar *wp_get_translation_domain(void)
 }
 
 gmpcPlugin plugin = {
-	.name = N_("WikiPedia"),
+	.name = N_("WikiPedia (fixed)"),
 	.version = {PLUGIN_MAJOR_VERSION,PLUGIN_MINOR_VERSION,PLUGIN_MICRO_VERSION},
 	.plugin_type = GMPC_PLUGIN_PL_BROWSER,
 	.init = wp_start_init, /*init */
@@ -119,9 +121,14 @@ static void wp_query_callback(const GEADAsyncHandler *handle, GEADStatus status,
 	const gchar *data;
 	gchar *targeturl, *txt;
 
+
+
+    g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "query returned %i\n",status);
 	if(status != GEAD_DONE)
 		return;
-	data = gmpc_easy_handler_get_data(handle, &size);
+    g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "query returned done\n");
+    data = gmpc_easy_handler_get_data(handle, &size);
+
 	doc = xmlParseMemory(data, size);
 	if(!doc)
 		return;
@@ -169,7 +176,7 @@ static void wp_query_callback(const GEADAsyncHandler *handle, GEADStatus status,
 			const gchar *oldurl = gmpc_easy_handler_get_uri(handle);
 			if (!g_str_has_prefix(oldurl, "http://en.")) {
 				gchar *newurl = g_strdup_printf("http://en.wikipedia.org/w/api.php?action=opensearch&search=%s&format=xml", txt);
-				debug_printf(DEBUG_INFO, "Trying to fetch: %s\n", newurl);
+				g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "Trying to fetch: %s\n", newurl);
 				gmpc_easy_async_downloader(newurl, wp_query_callback, NULL);
 				g_free(newurl);
 				goto out_doc;
@@ -191,12 +198,13 @@ static gchar *wp_clean_for_url(const gchar *str)
 {
 	static GRegex *re;
 	gchar *nstr;
+    gchar *retv;
 	GError *error = NULL;
 
 	if (!re) {
 		re = g_regex_new("[&/\\?]", G_REGEX_MULTILINE, 0, &error);
 		if (error) {
-			debug_printf(DEBUG_INFO, "Build regexp %s\n", error->message);
+			g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "Build regexp %s\n", error->message);
 			g_error_free(error);
 			return NULL;
 		}
@@ -204,11 +212,14 @@ static gchar *wp_clean_for_url(const gchar *str)
 
 	nstr = g_regex_replace(re, str, strlen(str), 0, "", 0, &error);
 	if (error) {
-		debug_printf(DEBUG_INFO, "regexp replace %s\n", error->message);
+		g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "regexp replace %s\n", error->message);
 		g_error_free(error);
 		return NULL;
 	}
-	return nstr;
+
+    retv =  gmpc_easy_download_uri_escape(nstr);
+    g_free(nstr);
+    return retv;
 }
 
 void wp_changed(GtkWidget *tree, GtkTreeIter *iter)
@@ -229,7 +240,7 @@ void wp_changed(GtkWidget *tree, GtkTreeIter *iter)
 			else
 				artist = g_strdup(song->artist);
 			g_strfreev(str);
-			debug_printf(DEBUG_INFO, "string converted to: '%s'", artist);
+			g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "string converted to: '%s'", artist);
 		} else {
 			artist = g_strdup(song->artist);
 		}
@@ -253,7 +264,7 @@ void wp_changed(GtkWidget *tree, GtkTreeIter *iter)
 	if (strcmp(old_artist, esc_artist) != 0)
 	{
 		gchar *url = g_strdup_printf("http://%s.wikipedia.org/w/api.php?action=opensearch&search=%s&format=xml", locale, esc_artist);
-		debug_printf(DEBUG_INFO, "Trying to fetch: %s\n", url);
+		g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "Trying to fetch: %s\n", url);
 		gmpc_easy_async_downloader(url, wp_query_callback, NULL);
 		g_free(url);
 
@@ -302,13 +313,13 @@ static WebKitNavigationResponse wp_navigation_requested(WebKitWebView *web_view,
 	uri = webkit_network_request_get_uri(request);
 	decoded_uri = soup_uri_decode(uri);
 	if (g_str_has_prefix(decoded_uri, current_url)) {
-		debug_printf(DEBUG_INFO, "Accepting %s\n", uri);
+		g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "Accepting %s\n", uri);
 		g_free(decoded_uri);
 		return WEBKIT_NAVIGATION_RESPONSE_ACCEPT;
 	}
 	g_free(decoded_uri);
 
-	debug_printf(DEBUG_INFO, "%s != %s\n", uri, current_url);
+	g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "%s != %s\n", uri, current_url);
 
 	screen = gtk_widget_get_screen(GTK_WIDGET(web_view));
 	if (!screen)
@@ -316,7 +327,7 @@ static WebKitNavigationResponse wp_navigation_requested(WebKitWebView *web_view,
 
 	gtk_show_uri(screen, uri, gtk_get_current_event_time(), &error);
 	if (error) {
-		debug_printf(DEBUG_INFO, "gtk_show_uri %s\n", error->message);
+		g_log(wikipedia_logdomain, G_LOG_LEVEL_DEBUG, "gtk_show_uri %s\n", error->message);
 		g_error_free(error);
 	}
 	return WEBKIT_NAVIGATION_RESPONSE_IGNORE;
@@ -406,6 +417,7 @@ void wp_selected(GtkWidget *container)
 
 	gtk_container_add(GTK_CONTAINER(container), wp_vbox);
 	gtk_widget_show_all(wp_vbox);
+	wp_changed(NULL, NULL);
 	if(global_progress==100)
 	{
 		gtk_widget_hide(pgb);
@@ -465,8 +477,12 @@ static void wp_status_changed(MpdObj *mi, ChangedStatusType what, void *userdata
 {
 	if(pl3_cat_get_selected_browser() == plugin.id)
 	{
-		wp_changed(NULL, NULL);
-	}
+        /* Only update when songid changed */
+        if((what&MPD_CST_SONGID) == MPD_CST_SONGID)
+        {
+            wp_changed(NULL, NULL);
+        }
+    }
 }
 
 static xmlNodePtr get_first_node_by_name(xmlNodePtr xml, gchar *name) {

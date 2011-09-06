@@ -98,7 +98,6 @@ public class MMKeys : Gmpc.Plugin.Base {
         }
     }
 }
-[ModuleInit]
 public Type plugin_get_type () {
         return typeof (MMKeys);
 }

@@ -1,4 +1,4 @@
-AC_INIT([gmpc-plugins], [0.20.0], [qball@sarine.nl])
+AC_INIT([gmpc-plugins], [11.8.16], [qball@sarine.nl])
 AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE
@@ -24,19 +24,19 @@ fi
 ##
 # Last FM
 ##
-AC_ARG_ENABLE(lastfm,
-         [  --enable-lastfm],
-         [ case "${enableval}" in
-         yes)    enable_lastfm=yes;;
-          no)    enable_lastfm=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-lastfm]);;
-          esac],
-         [enable_lastfm=yes])
+#AC_ARG_ENABLE(lastfm,
+#         [  --enable-lastfm],
+#         [ case "${enableval}" in
+#         yes)    enable_lastfm=yes;;
+#          no)    enable_lastfm=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-lastfm]);;
+#          esac],
+#         [enable_lastfm=yes])
  
-AM_CONDITIONAL([LAST_FM_OPT],[test x"$enable_lastfm" = xyes])
-if test x${enable_lastfm} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-last.fm])
-fi
+#AM_CONDITIONAL([LAST_FM_OPT],[test x"$enable_lastfm" = xyes])
+#if test x${enable_lastfm} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-last.fm])
+#fi
 
 ##
 # Cover amazon
@@ -49,11 +49,11 @@ fi
 #           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-coveramazon]);;
 #          esac],
 #         [enable_coveramazon=yes])
-enable_coveramazon=una
-AM_CONDITIONAL([COVERAMAZON_OPT], [test "$enable_coveramazon" = yes])
-if test x${enable_coveramazon} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-coveramazon])
-fi
+#enable_coveramazon=una
+#AM_CONDITIONAL([COVERAMAZON_OPT], [test "$enable_coveramazon" = yes])
+#if test x${enable_coveramazon} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-coveramazon])
+#fi
 
 
 ##
@@ -77,20 +77,20 @@ fi
 ##
 # mdcover
 ##
-AC_ARG_ENABLE(mdcover,
-         [  --enable-mdcover],
-         [ case "${enableval}" in
-         yes)    enable_mdcover=yes;;
-          no)    enable_mdcover=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-mdcover]);;
-          esac],
-         [enable_mdcover=yes])
+#AC_ARG_ENABLE(mdcover,
+#         [  --enable-mdcover],
+#         [ case "${enableval}" in
+#         yes)    enable_mdcover=yes;;
+#          no)    enable_mdcover=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-mdcover]);;
+#          esac],
+#         [enable_mdcover=yes])
  
 
-AM_CONDITIONAL([MDCOVER_OPT], [test "$enable_mdcover" = yes])
-if test x${enable_mdcover} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-mdcover])
-fi
+#AM_CONDITIONAL([MDCOVER_OPT], [test "$enable_mdcover" = yes])
+#if test x${enable_mdcover} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-mdcover])
+#fi
 
 #
 # * Lyrics
@@ -113,20 +113,20 @@ fi
 #
 # * Extra Playlist 
 # 
-AC_ARG_ENABLE(extraplaylist,
-         [  --enable-extraplaylist],
-         [ case "${enableval}" in
-         yes)    enable_extraplaylist=yes;;
-          no)    enable_extraplaylist=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-extraplaylist]);;
-          esac],
-         [enable_extraplaylist=yes])
+#AC_ARG_ENABLE(extraplaylist,
+#         [  --enable-extraplaylist],
+#         [ case "${enableval}" in
+#         yes)    enable_extraplaylist=yes;;
+#          no)    enable_extraplaylist=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-extraplaylist]);;
+#          esac],
+#         [enable_extraplaylist=yes])
  
 
-AM_CONDITIONAL([EXTRAPLAYLIST_OPT], [test "$enable_extraplaylist" = yes])
-if test x${enable_extraplaylist} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-extraplaylist])
-fi
+#AM_CONDITIONAL([EXTRAPLAYLIST_OPT], [test "$enable_extraplaylist" = yes])
+#if test x${enable_extraplaylist} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-extraplaylist])
+#fi
 
 #
 # * Avahi 
@@ -203,20 +203,20 @@ fi
 #
 # lirc 
 # 
-AC_ARG_ENABLE(lirc,
-         [  --enable-lirc],
-         [ case "${enableval}" in
-         yes)    enable_lirc=yes;;
-          no)    enable_lirc=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-lirc]);;
-          esac],
-         [enable_lirc=yes])
+#AC_ARG_ENABLE(lirc,
+#         [  --enable-lirc],
+#         [ case "${enableval}" in
+#         yes)    enable_lirc=yes;;
+#          no)    enable_lirc=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-lirc]);;
+#          esac],
+#         [enable_lirc=yes])
  
 
-AM_CONDITIONAL([LIRC_OPT], [test "$enable_lirc" = yes])
-if test x${enable_lirc} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-lirc])
-fi
+#AM_CONDITIONAL([LIRC_OPT], [test "$enable_lirc" = yes])
+#if test x${enable_lirc} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-lirc])
+#fi
 
 #
 # magnatune 
@@ -256,20 +256,20 @@ fi
 #
 # mserver 
 # 
-AC_ARG_ENABLE(mserver,
-         [  --enable-mserver],
-         [ case "${enableval}" in
-         yes)    enable_mserver=yes;;
-          no)    enable_mserver=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-mserver]);;
-          esac],
-         [enable_mserver=yes])
+#AC_ARG_ENABLE(mserver,
+#         [  --enable-mserver],
+#         [ case "${enableval}" in
+#         yes)    enable_mserver=yes;;
+#          no)    enable_mserver=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-mserver]);;
+#          esac],
+#         [enable_mserver=yes])
  
 
-AM_CONDITIONAL([MSERVER_OPT], [test "$enable_mserver" = yes])
-if test x${enable_mserver} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-mserver])
-fi
+#AM_CONDITIONAL([MSERVER_OPT], [test "$enable_mserver" = yes])
+#if test x${enable_mserver} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-mserver])
+#fi
 #
 # last.fm-radio 
 # 
@@ -362,20 +362,20 @@ fi
 ##
 # Lyricsplugin
 ##
-AC_ARG_ENABLE(lyricsplugin,
-         [  --enable-lyricsplugin],
-         [ case "${enableval}" in
-         yes)    enable_lyricsplugin=yes;;
-          no)    enable_lyricsplugin=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-lyricsplugin]);;
-          esac],
-         [enable_lyricsplugin=yes])
+#AC_ARG_ENABLE(lyricsplugin,
+#         [  --enable-lyricsplugin],
+#         [ case "${enableval}" in
+#         yes)    enable_lyricsplugin=yes;;
+#          no)    enable_lyricsplugin=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-lyricsplugin]);;
+#          esac],
+#         [enable_lyricsplugin=yes])
          
          
-AM_CONDITIONAL([LYRICSPLUGIN_OPT], [test "$enable_lyricsplugin" = yes])
-if test x${enable_lyricsplugin} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-lyricsplugin])
-fi
+#AM_CONDITIONAL([LYRICSPLUGIN_OPT], [test "$enable_lyricsplugin" = yes])
+#if test x${enable_lyricsplugin} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-lyricsplugin])
+#fi
 
 ##
 # albumview
@@ -398,37 +398,37 @@ fi
 ##
 # Discogs 
 ##
-AC_ARG_ENABLE(discogs,
-         [  --enable-discogs],
-         [ case "${enableval}" in
-         yes)    enable_discogs=yes;;
-          no)    enable_discogs=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-discogs]);;
-          esac],
-         [enable_discogs=yes])
+#AC_ARG_ENABLE(discogs,
+#         [  --enable-discogs],
+#         [ case "${enableval}" in
+#         yes)    enable_discogs=yes;;
+#          no)    enable_discogs=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-discogs]);;
+#          esac],
+#         [enable_discogs=yes])
          
          
-AM_CONDITIONAL([DISCOGS_OPT], [test "$enable_discogs" = yes])
-if test x${enable_discogs} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-discogs])
-fi
+#AM_CONDITIONAL([DISCOGS_OPT], [test "$enable_discogs" = yes])
+#if test x${enable_discogs} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-discogs])
+#fi
 ##
 # Fullscreen info 
 ##
-AC_ARG_ENABLE(fullscreeninfo,
-         [  --enable-fullscreeninfo],
-         [ case "${enableval}" in
-         yes)    enable_fullscreeninfo=yes;;
-          no)    enable_fullscreeninfo=no;;
-           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-fullscreeninfo]);;
-          esac],
-         [enable_fullscreeninfo=yes])
+#AC_ARG_ENABLE(fullscreeninfo,
+#         [  --enable-fullscreeninfo],
+#         [ case "${enableval}" in
+#         yes)    enable_fullscreeninfo=yes;;
+#          no)    enable_fullscreeninfo=no;;
+#           *)    AC_MSG_ERROR([bad value ${enableval} for --enable-fullscreeninfo]);;
+#          esac],
+#         [enable_fullscreeninfo=yes])
          
          
-AM_CONDITIONAL([FULLSCREENINFO_OPT], [test "$enable_fullscreeninfo" = yes])
-if test x${enable_fullscreeninfo} = xyes; then
-    AC_CONFIG_SUBDIRS([gmpc-fullscreeninfo])
-fi
+#AM_CONDITIONAL([FULLSCREENINFO_OPT], [test "$enable_fullscreeninfo" = yes])
+#if test x${enable_fullscreeninfo} = xyes; then
+#    AC_CONFIG_SUBDIRS([gmpc-fullscreeninfo])
+#fi
 
 
 ##
@@ -465,31 +465,31 @@ if test x${enable_awn} = xyes; then
 else
     echo "awn                               disabled"
 fi
-if test x${enable_lastfm} = xyes; then
-    echo "last.fm                           enabled"
-else
-    echo "last.fm                           disabled"
-fi
-if test x${enable_coveramazon} = xyes; then
-    echo "Cover amazon                      enabled"
-else
-if test x${enable_lyricwiki} = xno; then
-    echo "Cover amazon                        disabled"
-else
-    echo "Cover amazon                        unavailable"
-fi
-fi
+#if test x${enable_lastfm} = xyes; then
+#    echo "last.fm                           enabled"
+#else
+#    echo "last.fm                           disabled"
+#fi
+#if test x${enable_coveramazon} = xyes; then
+#    echo "Cover amazon                      enabled"
+#else
+#if test x${enable_lyricwiki} = xno; then
+#    echo "Cover amazon                        disabled"
+#else
+#    echo "Cover amazon                        unavailable"
+#fi
+#fi
 
 if test x${enable_lyrics} = xyes; then
     echo "Lyrics                            enabled"
 else
     echo "Lyrics                            disabled"
 fi
-if test x${enable_mdcover} = xyes; then
-    echo "mdcover                           enabled"
-else
-    echo "mdcover                           disabled"
-fi
+#if test x${enable_mdcover} = xyes; then
+#    echo "mdcover                           enabled"
+#else
+#    echo "mdcover                           disabled"
+#fi
 if test x${enable_lyricwiki} = xyes; then
     echo "lyric wiki                        enabled"
 else
@@ -499,11 +499,11 @@ else
     echo "lyric wiki                        unavailable"
 fi
 fi
-if test x${enable_extraplaylist} = xyes; then
-    echo "extraplaylist                     enabled"
-else
-    echo "extraplaylist                     disabled"
-fi
+#if test x${enable_extraplaylist} = xyes; then
+#    echo "extraplaylist                     enabled"
+#else
+#    echo "extraplaylist                     disabled"
+#fi
 if test x${enable_avahi} = xyes; then
     echo "avahi                             enabled"
 else
@@ -524,11 +524,11 @@ if test x${enable_jamendo} = xyes; then
 else
     echo "jamendo                           disabled"
 fi
-if test x${enable_lirc} = xyes; then
-    echo "lirc                              enabled"
-else
-    echo "lirc                              disabled"
-fi
+#if test x${enable_lirc} = xyes; then
+#    echo "lirc                              enabled"
+#else
+#    echo "lirc                              disabled"
+#fi
 if test x${enable_magnatune} = xyes; then
     echo "magnatune                         enabled"
 else
@@ -539,11 +539,11 @@ if test x${enable_shout} = xyes; then
 else
     echo "shout                             disabled"
 fi
-if test x${enable_mserver} = xyes; then
-    echo "mserver                           enabled"
-else
-    echo "mserver                           disabled"
-fi
+#if test x${enable_mserver} = xyes; then
+#    echo "mserver                           enabled"
+#else
+#    echo "mserver                           disabled"
+#fi
 #if test x${enable_lastfmradio} = xyes; then
 #    echo "lastfmradio                       enabled"
 #else
@@ -571,11 +571,11 @@ fi
 #    echo "Dynamic Playlist                  disabled"
 #fi
 
-if test x${enable_lyricsplugin} = xyes; then
-    echo "Lyricsplugin                      enabled"
-else
-    echo "Lyricsplugin                      disabled"
-fi
+#if test x${enable_lyricsplugin} = xyes; then
+#    echo "Lyricsplugin                      enabled"
+#else
+#    echo "Lyricsplugin                      disabled"
+#fi
 
 
 if test x${enable_albumview} = xyes; then
@@ -584,17 +584,17 @@ else
     echo "Albumview                         disabled"
 fi
 
-if test x${enable_discogs} = xyes; then
-    echo "Discogs Playlist                  enabled"
-else
-    echo "Discogs Playlist                  disabled"
-fi
+#if test x${enable_discogs} = xyes; then
+#    echo "Discogs Playlist                  enabled"
+#else
+#    echo "Discogs Playlist                  disabled"
+#fi
 
-if test x${enable_fullscreeninfo} = xyes; then
-    echo "Fullscreen info                   enabled"
-else
-    echo "Fullscreen info                   disabled"
-fi
+#if test x${enable_fullscreeninfo} = xyes; then
+#    echo "Fullscreen info                   enabled"
+#else
+#    echo "Fullscreen info                   disabled"
+#fi
 
 if test x${enable_mmkeys} = xyes; then
     echo "MMKeys info                   enabled"
