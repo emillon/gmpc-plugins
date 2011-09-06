@@ -8,7 +8,7 @@ Homepage: http://gmpc.wikia.com/
 
 Package: gmpc-plugins
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, gmpc (>= 0.18.96)
+Depends: ${shlibs:Depends}, ${misc:Depends}, gmpc (>= 11.8.16)
 Description: Plugins for the GNOME Music Player Client
  gmpc-plugins is a set of plugins that enhance functionality of the GNOME
  Music Player Clients. Plugins are:
