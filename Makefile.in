@@ -60,11 +60,9 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = gmpc-alarm gmpc-avahi gmpc-awn gmpc-extraplaylist \
-	gmpc-jamendo gmpc-last.fm gmpc-lirc gmpc-lyrics gmpc-magnatune \
-	gmpc-mdcover gmpc-shout gmpc-mserver gmpc-tagedit \
-	gmpc-wikipedia gmpc-playlistsort gmpc-albumview gmpc-discogs \
-	gmpc-lyricwiki gmpc-fullscreeninfo gmpc-mmkeys
+DIST_SUBDIRS = gmpc-alarm gmpc-avahi gmpc-awn gmpc-jamendo gmpc-lyrics \
+	gmpc-magnatune gmpc-shout gmpc-tagedit gmpc-wikipedia \
+	gmpc-albumview gmpc-lyricwiki gmpc-mmkeys
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -187,37 +185,61 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign 1.6
 @AWN_OPT_TRUE@AWN_OPT_DIR = gmpc-awn
-@LAST_FM_OPT_TRUE@LAST_FM_OPT_DIR = gmpc-last.fm
+
+#if LAST_FM_OPT
+#LAST_FM_OPT_DIR= gmpc-last.fm
+#endif
 
 #if COVERAMAZON_OPT
 #COVERAMAZON_OPT_DIR= gmpc-coveramazon
 #endif
 @LYRICWIKI_OPT_TRUE@LYRICWIKI_OPT_DIR = gmpc-lyricwiki
-@MDCOVER_OPT_TRUE@MDCOVER_OPT_DIR = gmpc-mdcover
+
+#if MDCOVER_OPT 
+#MDCOVER_OPT_DIR= gmpc-mdcover
+#endif
 @LYRICS_OPT_TRUE@LYRICS_OPT_DIR = gmpc-lyrics
-@EXTRAPLAYLIST_OPT_TRUE@EXTRAPLAYLIST_OPT_DIR = gmpc-extraplaylist
+
+#if EXTRAPLAYLIST_OPT
+#EXTRAPLAYLIST_OPT_DIR= gmpc-extraplaylist
+#endif
 @AVAHI_OPT_TRUE@AVAHI_OPT_DIR = gmpc-avahi
 @LIBNOTIFY_OPT_TRUE@LIBNOTIFY_OPT_DIR = gmpc-avahi
 @ALARM_OPT_TRUE@ALARM_OPT_DIR = gmpc-alarm
 @JAMENDO_OPT_TRUE@JAMENDO_OPT_DIR = gmpc-jamendo
-@LIRC_OPT_TRUE@LIRC_OPT_DIR = gmpc-lirc
+
+#if LIRC_OPT
+#LIRC_OPT_DIR= gmpc-lirc
+#endif
 @MAGNATUNE_OPT_TRUE@MAGNATUNE_OPT_DIR = gmpc-magnatune
 @SHOUT_OPT_TRUE@SHOUT_OPT_DIR = gmpc-shout
-@MSERVER_OPT_TRUE@MSERVER_OPT_DIR = gmpc-mserver
+
+#if MSERVER_OPT
+#MSERVER_OPT_DIR= gmpc-mserver
+#endif
 
 #if LASTFMRADIO_OPT
 #LASTFMRADIO_OPT_DIR= gmpc-shout
 #endif
 @TAGEDIT_OPT_TRUE@TAGEDIT_OPT_DIR = gmpc-tagedit
 @WIKIPEDIA_OPT_TRUE@WIKIPEDIA_OPT_DIR = gmpc-wikipedia
-@PLAYLISTSORT_OPT_TRUE@PLAYLISTSORT_OPT_DIR = gmpc-playlistsort
+
+#if PLAYLISTSORT_OPT
+#PLAYLISTSORT_OPT_DIR= gmpc-playlistsort
+#endif
 
 #if DYNAMICPLAYLIST_OPT
 #DYNAMICPLAYLIST_OPT_DIR= gmpc-dynamicplaylist
 #endif
 @ALBUMVIEW_OPT_TRUE@ALBUMVIEW_OPT_DIR = gmpc-albumview
-@DISCOGS_OPT_TRUE@DISCOGS_OPT_DIR = gmpc-discogs
-@FULLSCREENINFO_OPT_TRUE@FULLSCREENINFO_OPT_DIR = gmpc-fullscreeninfo
+
+#if DISCOGS_OPT
+#DISCOGS_OPT_DIR= gmpc-discogs
+#endif
+
+#if FULLSCREENINFO_OPT
+#FULLSCREENINFO_OPT_DIR= gmpc-fullscreeninfo
+#endif
 @MMKEYS_OPT_TRUE@MMKEYS_OPT_DIR = gmpc-mmkeys
 SUBDIRS = \
 		$(ALARM_OPT_DIR)\

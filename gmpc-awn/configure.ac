@@ -3,11 +3,11 @@ AC_PREREQ(2.58)
 m4_define([package_name], [gmpc-awn])
 #Define the version
 m4_define([package_major_version], [0])
-m4_define([package_minor_version], [19])
-m4_define([package_micro_version], [101])
+m4_define([package_minor_version], [20])
+m4_define([package_micro_version], [95])
 m4_define([package_version], [package_major_version.package_minor_version.package_micro_version])
 
-AC_INIT([gmpc-awn], [0.19.101], [qball@sarine.nl])
+AC_INIT([gmpc-awn], [0.20.95], [qball@sarine.nl])
 AM_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE
 

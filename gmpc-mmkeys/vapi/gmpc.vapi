@@ -1,4 +1,3 @@
-using Gmpc.PanedSizeGroup;
 
 namespace Gmpc {
     [CCode (cname="TRUE",cheader_filename="gtk/gtk.h,gtktransition.h")]
@@ -19,9 +18,12 @@ namespace Gmpc {
     [CCode (cname = "gmpc_profiles", cheader_filename="plugin.h")]
     static Profiles profiles;
 
+    [CCode (cname = "gmpc_easy_command", cheader_filename="plugin.h")]
+    static Easy.Command  easy_command;
+
     [CCode (cheader_filename="gmpc-meta-watcher.h")]
     public class MetaWatcher {
-        signal void data_changed(MPD.Song song,  Gmpc.MetaData.Type type, Gmpc.MetaData.Result result,MetaData.Item met);
+        public signal void data_changed(MPD.Song song,  Gmpc.MetaData.Type type, Gmpc.MetaData.Result result,MetaData.Item met);
 
 
         [CCode ( cname="gmpc_meta_watcher_get_meta_path", cheader_filename="gmpc-meta-watcher.h" )]
@@ -50,8 +52,9 @@ namespace Gmpc {
             [CCode (cname="meta_data_new")]
             public Item ();
             public Gmpc.MetaData.Type type; 
-           public weak string plugin_name;
+           public unowned string plugin_name;
            public int size;
+           public void * content;
            public Gmpc.MetaData.ContentType content_type;
 
            [CCode (cname="meta_data_is_empty")]
@@ -60,24 +63,26 @@ namespace Gmpc {
            [CCode (cname="meta_data_set_uri")]
            public void set_uri(string uri);
            /* add accessors? */
-           [CCode (cname="meta_data_get_image")]
-           public weak uchar[] get_raw();
+           [CCode (cname="meta_data_get_raw")]
+           public unowned uchar[] get_raw();
 
            [CCode (cname="meta_data_get_text")]
-           public weak string  get_text();
+           public unowned string  get_text();
+           [CCode (cname="meta_data_get_text_from_html")]
+           public string get_text_from_html();
            /* same as get_text */
 
            [CCode (cname="meta_data_get_uri")]
-           public weak string get_uri();
+           public unowned string get_uri();
 
            [CCode (cname="meta_data_get_html")]
-           public weak string get_html();
+           public unowned string get_html();
 
            [CCode (cname="meta_data_get_text_vector")]
-           public weak string[] get_text_vector();
+           public unowned string[] get_text_vector();
 
            [CCode (cname="meta_data_get_text_list")]
-           public weak GLib.List<weak string> get_text_list();
+           public unowned GLib.List<unowned string> get_text_list();
 
            [CCode (cname="meta_data_is_text_list")]
            public bool  is_text_list();
@@ -134,6 +139,10 @@ namespace Gmpc {
             public void set_squared(bool squared);
             [CCode (cname="gmpc_metaimage_set_hide_on_na")]
             public void set_hide_on_na(bool hide);
+            [CCode (cname="gmpc_metaimage_set_no_cover_icon")]
+            public void set_no_cover_icon(string name);
+            [CCode (cname="gmpc_metaimage_set_loading_cover_icon")]
+            public void set_loading_cover_icon(string name);
 
             [CCode (cname="gmpc_metaimage_set_scale_up")]
             public void set_scale_up(bool scale);
@@ -196,9 +205,9 @@ namespace Gmpc {
             public void cancel ();
 
             [CCode (cname="gmpc_easy_handler_get_data_vala_wrap", cheader_filename="gmpc_easy_download.h")]
-            public weak uchar[] get_data();
+            public unowned uchar[] get_data();
             [CCode (cname="gmpc_easy_handler_get_uri", cheader_filename="gmpc_easy_download.h")]
-            public weak string get_uri();
+            public unowned string get_uri();
 
             [CCode (cname="gmpc_easy_handler_get_user_data", cheader_filename="gmpc_easy_download.h")]
             public void * get_user_data();
@@ -215,7 +224,7 @@ namespace Gmpc {
         public delegate void Callback (Gmpc.AsyncDownload.Handle handle, Gmpc.AsyncDownload.Status status);
 
         [CCode (cname="gmpc_easy_async_downloader", cheader_filename="gmpc_easy_download.h")]
-        public weak Gmpc.AsyncDownload.Handle download(string uri, Gmpc.AsyncDownload.Callback callback);
+        public unowned Gmpc.AsyncDownload.Handle download(string uri, Gmpc.AsyncDownload.Callback callback);
         
         [CCode (cname="gmpc_easy_download_uri_escape", cheader_filename="gmpc_easy_download.h")]
         public string escape_uri(string part);
@@ -230,10 +239,15 @@ namespace Gmpc {
 
     namespace Playlist {
         [CCode (cname="(GtkWindow *)playlist3_get_window", cheader_filename="plugin.h")]
-        public weak Gtk.Window get_window();
+        public unowned Gtk.Window get_window();
 [CCode (cname="playlist3_window_is_hidden", cheader_filename="plugin.h")]
         public bool is_hidden();
 
+[CCode (cname="pl3_hide", cheader_filename="plugin.h")]
+        public void hide();
+
+[CCode (cname="create_playlist3", cheader_filename="plugin.h")]
+        public void show();
     }
 
 
@@ -289,11 +303,14 @@ namespace Gmpc {
 
         [CCode (cname="main_window_add_status_icon")]
         public void add_status_icon(Gtk.Widget widget);
+
+        [CCode (cname="pl3_update_go_menu",cheader_filename="plugin.h")]
+        public void update_go_menu();
     }
 
     /* objects */
     namespace MpdData {
-        [CCode (chader_filename="gmpc-mpddata-treeview.h",cname="GmpcMpdDataTreeview")]
+        [CCode (cheader_filename="gmpc-mpddata-treeview.h",cname="GmpcMpdDataTreeview",type_check_function="GMPC_IS_MPDDATA_TREEVIEW")]
         public class TreeView : Gtk.TreeView {
             [CCode (cname="gmpc_mpddata_treeview_new")]
             public TreeView(string name, bool sort, Gtk.TreeModel model);
@@ -315,7 +332,7 @@ namespace Gmpc {
             public void set_request_artist(string? list);
 
             [CCode (cname="gmpc_mpddata_model_get_request_artist")]
-            public weak string get_request_artist();
+            public unowned string get_request_artist();
             public int icon_size;
         }
     }
@@ -340,6 +357,51 @@ namespace Gmpc {
             public string? get_current_id();
             public void set_db_update_time(string id, int value);
             public int get_db_update_time(string id);
+            public unowned string? get_music_directory(string id); 
+            [CCode (cname="connection_get_hostname", cheader_filename="mpdinteraction.h")]
+            public string? get_hostname();
 
     }
+
+    namespace Fix{
+        [CCode (cname="gdk_pixbuf_loader_write", cheader_filename="gdk-pixbuf/gdk-pixdata.h")]
+            public void write_loader(Gdk.PixbufLoader loader, string data, size_t size) throws GLib.Error;
+
+        [CCode (cname="screenshot_add_border", cheader_filename="misc.h")]
+            public void add_border(Gdk.Pixbuf image);
+
+        [CCode (cname="pango_attr_list_change", cheader_filename="pango/pango.h")] 
+            public void change (Pango.AttrList list,owned Pango.Attribute attr);
+    }
+    [CCode (cheader_filename="pixbuf-cache.h")]
+    namespace PixbufCache {
+        [CCode (cname="pixbuf_cache_lookup_icon")]
+            public Gdk.Pixbuf? lookup_icon(int size, string url);
+        [CCode (cname="pixbuf_cache_add_icon")]
+            public void add_icon(int size, string url, Gdk.Pixbuf pb);
+
+    }
+    [CCode (cheader_filename="advanced-search.h")]
+    namespace Query{
+        [CCode (cname="advanced_search")]     
+        public MPD.Data.Item? search(string query, bool playlist);
+
+    }
+
+	[CCode (cname="gmpcPluginParent",cprefix="gmpc_plugin_",cheader_filename="plugin-internal.h")]
+        [Compact]
+        [Immutable]
+	public class parentPlugin 
+	{
+		public int get_id();
+		public unowned string get_name();
+		public int get_enabled();
+		public bool has_enabled();
+		public void set_enabled(int e);
+		public bool is_browser();
+	}
+	[CCode (cheader_filename="main.h", cname="plugins")]
+	static weak parentPlugin[] plugins; 
+	[CCode (cheader_filename="main.h", cname="num_plugins")]
+	static int num_plugins;
 }

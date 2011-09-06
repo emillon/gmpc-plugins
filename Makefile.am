@@ -4,9 +4,9 @@ if AWN_OPT
 AWN_OPT_DIR= gmpc-awn
 endif
 
-if LAST_FM_OPT
-LAST_FM_OPT_DIR= gmpc-last.fm
-endif
+#if LAST_FM_OPT
+#LAST_FM_OPT_DIR= gmpc-last.fm
+#endif
 
 #if COVERAMAZON_OPT
 #COVERAMAZON_OPT_DIR= gmpc-coveramazon
@@ -16,17 +16,17 @@ if LYRICWIKI_OPT
 LYRICWIKI_OPT_DIR= gmpc-lyricwiki
 endif
 
-if MDCOVER_OPT 
-MDCOVER_OPT_DIR= gmpc-mdcover
-endif
+#if MDCOVER_OPT 
+#MDCOVER_OPT_DIR= gmpc-mdcover
+#endif
 
 if LYRICS_OPT
 LYRICS_OPT_DIR= gmpc-lyrics
 endif
 
-if EXTRAPLAYLIST_OPT
-EXTRAPLAYLIST_OPT_DIR= gmpc-extraplaylist
-endif
+#if EXTRAPLAYLIST_OPT
+#EXTRAPLAYLIST_OPT_DIR= gmpc-extraplaylist
+#endif
 
 if AVAHI_OPT
 AVAHI_OPT_DIR= gmpc-avahi
@@ -44,9 +44,9 @@ if JAMENDO_OPT
 JAMENDO_OPT_DIR= gmpc-jamendo
 endif
 
-if LIRC_OPT
-LIRC_OPT_DIR= gmpc-lirc
-endif
+#if LIRC_OPT
+#LIRC_OPT_DIR= gmpc-lirc
+#endif
 
 if MAGNATUNE_OPT
 MAGNATUNE_OPT_DIR= gmpc-magnatune
@@ -56,9 +56,9 @@ if SHOUT_OPT
 SHOUT_OPT_DIR= gmpc-shout
 endif
 
-if MSERVER_OPT
-MSERVER_OPT_DIR= gmpc-mserver
-endif
+#if MSERVER_OPT
+#MSERVER_OPT_DIR= gmpc-mserver
+#endif
 
 #if LASTFMRADIO_OPT
 #LASTFMRADIO_OPT_DIR= gmpc-shout
@@ -74,9 +74,9 @@ WIKIPEDIA_OPT_DIR= gmpc-wikipedia
 endif
 
 
-if PLAYLISTSORT_OPT
-PLAYLISTSORT_OPT_DIR= gmpc-playlistsort
-endif
+#if PLAYLISTSORT_OPT
+#PLAYLISTSORT_OPT_DIR= gmpc-playlistsort
+#endif
 
 #if DYNAMICPLAYLIST_OPT
 #DYNAMICPLAYLIST_OPT_DIR= gmpc-dynamicplaylist
@@ -86,13 +86,13 @@ if ALBUMVIEW_OPT
 ALBUMVIEW_OPT_DIR= gmpc-albumview
 endif
 
-if DISCOGS_OPT
-DISCOGS_OPT_DIR= gmpc-discogs
-endif
+#if DISCOGS_OPT
+#DISCOGS_OPT_DIR= gmpc-discogs
+#endif
 
-if FULLSCREENINFO_OPT
-FULLSCREENINFO_OPT_DIR= gmpc-fullscreeninfo
-endif
+#if FULLSCREENINFO_OPT
+#FULLSCREENINFO_OPT_DIR= gmpc-fullscreeninfo
+#endif
 
 if MMKEYS_OPT
 MMKEYS_OPT_DIR=gmpc-mmkeys

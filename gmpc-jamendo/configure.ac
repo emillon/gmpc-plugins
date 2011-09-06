@@ -1,7 +1,7 @@
-AC_INIT([gmpc-jamendo], [0.19.101], [qball@sarine.nl])
+AC_INIT([gmpc-jamendo], [0.20.95], [qball@sarine.nl])
 m4_define([package_major_version], [0])
-m4_define([package_minor_version], [19])
-m4_define([package_micro_version], [101])
+m4_define([package_minor_version], [20])
+m4_define([package_micro_version], [95])
 m4_define([package_version],[package_major_version.package_minor_version.package_micro_version])
 
 AM_CONFIG_HEADER([config.h])
@@ -56,9 +56,8 @@ PKG_CHECK_MODULES([gmpcjamendo],
 	gtk+-2.0 >= 2.4
 	gmodule-2.0
 	libmpd >= 0.15.98
-	gmpc >= 0.19.2
+	gmpc > 0.20.2
     libxml-2.0 >= 2.6
-    libglade-2.0
     sqlite3
 ])
 GOB2_CHECK([2.0.10])

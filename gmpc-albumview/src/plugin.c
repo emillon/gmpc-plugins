@@ -9,7 +9,7 @@
 #include <gmpc/misc.h>
 #include <libmpd/libmpd-internal.h>
 #include <math.h>
-#include "exo-wrap-table.h"
+#include <gmpc/gmpc-extras.h>
 #include "plugin.h"
 
 const GType albumview_plugin_get_type(void);
@@ -27,6 +27,7 @@ typedef struct _AlbumViewPluginPrivate {
     GtkWidget *albumview_box;
     GtkWidget *albumview_main_box;
     GtkWidget *event_bg;
+    gboolean  require_scale_update;
     int max_entries;
     int current_entry;
 
@@ -35,7 +36,7 @@ typedef struct _AlbumViewPluginPrivate {
     /* temp */
     MpdData *data;
     GList *current_item;
-    GtkTreeRowReference *albumview_ref; 
+    GtkTreeRowReference *albumview_ref;
 }_AlbumViewPluginPrivate;
 
 
@@ -47,7 +48,7 @@ static void filter_list(GtkEntry *entry, gpointer data);
 void update_view(AlbumViewPlugin *self);
 static void load_list(AlbumViewPlugin *self);
 /**
- * Get/Set enable 
+ * Get/Set enable
  */
 
 static int albumview_get_enabled(GmpcPluginBase *plug)
@@ -78,36 +79,36 @@ void albumview_set_enabled(GmpcPluginBase *plug, int enabled)
 			gtk_tree_path_free(path);
 			gtk_tree_row_reference_free(self->priv->albumview_ref);
 			self->priv->albumview_ref = NULL;
-		}      
+		}
 	}
 }
 
 /**
- * Playlist browser functions 
+ * Playlist browser functions
  */
 static void albumview_add(GmpcPluginBrowserIface *plug, GtkWidget *category_tree)
 {
     AlbumViewPlugin *self = ALBUM_VIEW_PLUGIN(plug);
 	GtkTreePath *path;
-	GtkTreeModel *model = GTK_TREE_MODEL(playlist3_get_category_tree_store()); 
+	GtkTreeModel *model = GTK_TREE_MODEL(playlist3_get_category_tree_store());
 	GtkTreeIter iter;
     gint pos;
 	/**
 	 * don't do anything if we are disabled
 	 */
 	if(!cfg_get_single_value_as_int_with_default(config, "albumview", "enable", TRUE)) return;
-	/** 
-	 * Add ourslef to the list 
+	/**
+	 * Add ourslef to the list
 	 */
 	pos = cfg_get_single_value_as_int_with_default(config, "albumview","position",2);
 	playlist3_insert_browser(&iter, pos);
-	gtk_list_store_set(GTK_LIST_STORE(model), &iter, 
+	gtk_list_store_set(GTK_LIST_STORE(model), &iter,
 			PL3_CAT_TYPE, GMPC_PLUGIN_BASE(plug)->id,
-			PL3_CAT_TITLE,"Album View", 
+			PL3_CAT_TITLE,"Album View",
 			PL3_CAT_ICON_ID, "albumview",
 			-1);
-	/** 
-	 * remove odl reference if exists 
+	/**
+	 * remove odl reference if exists
 	 */
 	if (self->priv->albumview_ref) {
 		gtk_tree_row_reference_free(self->priv->albumview_ref);
@@ -143,32 +144,21 @@ void size_changed(GtkWidget *widget, GtkAllocation *alloc, gpointer user_data)
     AlbumViewPlugin *self = ALBUM_VIEW_PLUGIN(user_data);
     int columns = (alloc->width-10)/(self->priv->album_size +25);
     int rows = (alloc->height-10)/(self->priv->album_size +40);
-    
+
     if(columns != self->priv->supported_columns || rows != self->priv->supported_rows)
     {
         self->priv->supported_columns = (columns)?columns:1;
         self->priv->supported_rows = (rows)?rows:1;
-        g_log(AV_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "update columns: %i %i %i\n", alloc->width-20,columns, self->priv->album_size);
+        printf("supported rows: %i\n", self->priv->supported_rows);
+        g_log(AV_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "update columns: %i %i %i\n",
+                alloc->width-20,columns, self->priv->album_size);
+        self->priv->require_scale_update = TRUE;
         if(self->priv->filter_entry && GTK_WIDGET_IS_SENSITIVE(self->priv->filter_entry))
         {
             update_view(self);
         }
     }
 
-}
-void album_size_changed(GtkSpinButton *spin, gpointer user_data)
-{
-    AlbumViewPlugin *self = ALBUM_VIEW_PLUGIN(user_data);
-    int new_size = ((int)gtk_spin_button_get_value(spin))*25+50;
-    if(new_size != self->priv->album_size) {
-        self->priv->album_size = new_size;
-        g_log(AV_LOG_DOMAIN, G_LOG_LEVEL_DEBUG, "Set new size: %i\n", new_size);
-        /* Reset so it gets redrawn */
-        self->priv->supported_columns = -1;
-        /* Force re-display */
-        size_changed(self->priv->albumview_main_box, &(self->priv->albumview_main_box->allocation), self);
-    }
-    cfg_set_single_value_as_int(config, "albumview", "zoom-level", (int)gtk_spin_button_get_value(spin));
 }
 
 static gboolean albumview_scroll_event(GtkWidget *event_box, GdkEventScroll *event, gpointer data)
@@ -177,11 +167,11 @@ static gboolean albumview_scroll_event(GtkWidget *event_box, GdkEventScroll *eve
     if(self->priv->current_item == NULL) return FALSE;
     if(event->direction == GDK_SCROLL_UP)
     {
-        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))-self->priv->supported_columns; 
+        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))-1;
         gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), value);
         return TRUE;
     }else if(event->direction == GDK_SCROLL_DOWN) {
-        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))+self->priv->supported_columns; 
+        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))+1;
         gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), value);
         return TRUE;
     }
@@ -193,20 +183,20 @@ static gboolean albumview_key_press_event(GtkWidget *event_box, GdkEventKey *eve
     if(self->priv->current_item == NULL) return FALSE;
 
     if(event->keyval == GDK_Up){
-        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))-self->priv->supported_columns; 
+        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))-1;
         gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), value);
         return TRUE;
     }else if (event->keyval == GDK_Down){
-        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))+self->priv->supported_columns; 
+        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))+1;
         gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), value);
         return TRUE;
     }else if (event->keyval == GDK_Page_Up) {
-        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))-self->priv->supported_columns*self->priv->supported_rows; 
+        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))-5;
         gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), value);
         return TRUE;
 
     }else if (event->keyval == GDK_Page_Down) {
-        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))+self->priv->supported_columns*self->priv->supported_rows; 
+        int value = gtk_range_get_value(GTK_RANGE(self->priv->slider_scale))+5;
         gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), value);
         return TRUE;
 
@@ -241,19 +231,19 @@ static gboolean albumview_expose_event(GtkWidget *widget, GdkEventExpose *event,
 	int height = widget->allocation.height;
     AlbumViewPlugin *self = ALBUM_VIEW_PLUGIN(data);
 
-	gtk_paint_flat_box(widget->style, 
-					widget->window, 
+	gtk_paint_flat_box(widget->style,
+					widget->window,
 					GTK_STATE_NORMAL,
 					GTK_SHADOW_NONE,
-					NULL, 
+					NULL,
 					widget,
 					"entry_bg",
 					0,0,width,height);
     if(gtk_widget_is_focus(widget))
     {
-        gtk_paint_focus(widget->style, widget->window, 
-                GTK_STATE_NORMAL, 
-                NULL, 
+        gtk_paint_focus(widget->style, widget->window,
+                GTK_STATE_NORMAL,
+                NULL,
                 widget,
                 "entry_bg",
                 0,0,width,height);
@@ -278,10 +268,9 @@ static void albumview_init(AlbumViewPlugin *self)
     self->priv->event_bg = gtk_event_box_new();
     self->priv->albumview_main_box = gtk_vbox_new(FALSE, 6);
 
-    self->priv->album_size = 25*cfg_get_single_value_as_int_with_default(config, "albumview", "zoom-level", 5)+50;
-    g_signal_connect(G_OBJECT(event), "size-allocate", G_CALLBACK(size_changed), self); 
-    
-    GtkWidget *iv = self->priv->albumview_box = gtk_vbox_new(FALSE, 6); 
+    g_signal_connect(G_OBJECT(event), "size-allocate", G_CALLBACK(size_changed), self);
+
+    GtkWidget *iv = self->priv->albumview_box = gtk_vbox_new(FALSE, 6);
     self->priv->slider_scale = gtk_vscale_new_with_range(0,1,1);
     gtk_scale_set_draw_value(GTK_SCALE(self->priv->slider_scale), FALSE);
     g_signal_connect(G_OBJECT(self->priv->slider_scale), "value-changed", G_CALLBACK(position_changed), self);
@@ -294,31 +283,22 @@ static void albumview_init(AlbumViewPlugin *self)
 #endif
     g_signal_connect(G_OBJECT(self->priv->filter_entry),"changed", G_CALLBACK(filter_list), self);
 
-    GtkWidget *spin= gtk_spin_button_new_with_range(1, 10, 1);
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), self->priv->album_size);
 
     hbox = gtk_hbox_new(FALSE, 6);
-    gtk_box_pack_start(GTK_BOX(hbox),gtk_label_new(("Filter")), FALSE, FALSE, 0); 
-    gtk_box_pack_start(GTK_BOX(hbox),self->priv->filter_entry, TRUE, TRUE, 0); 
+    gtk_box_pack_start(GTK_BOX(hbox),gtk_label_new(("Filter")), FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox),self->priv->filter_entry, TRUE, TRUE, 0);
 
-    gtk_box_pack_start(GTK_BOX(hbox),gtk_label_new(("Zoom level")), FALSE, FALSE, 0); 
-    gtk_widget_set_size_request(spin, 140, -1);
-    gtk_box_pack_start(GTK_BOX(hbox),spin, FALSE, FALSE, 0); 
     gtk_box_pack_end(GTK_BOX(self->priv->albumview_main_box), hbox, FALSE, FALSE, 0);
-
-    gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin), cfg_get_single_value_as_int_with_default(config, "albumview", "zoom-level", 10));
-    g_signal_connect(G_OBJECT(spin), "value-changed", G_CALLBACK(album_size_changed), self);
-
 
     hbox = gtk_hbox_new(FALSE, 6);
     gtk_box_pack_start(GTK_BOX(self->priv->albumview_main_box),hbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox),event, TRUE, TRUE, 0); 
+    gtk_box_pack_start(GTK_BOX(hbox),event, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox),self->priv->slider_scale, FALSE, FALSE, 0);//gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(sw), event);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(event), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(event), GTK_SHADOW_ETCHED_IN);
     /* setup bg */
     /* TODO draw focus */
-//    gtk_widget_modify_bg(self->priv->event_bg, GTK_STATE_NORMAL,&(self->priv->albumview_main_box->style->white)); 
+//    gtk_widget_modify_bg(self->priv->event_bg, GTK_STATE_NORMAL,&(self->priv->albumview_main_box->style->white));
     gtk_widget_set_app_paintable(self->priv->event_bg, TRUE);
     g_signal_connect(G_OBJECT(self->priv->event_bg), "expose-event", G_CALLBACK(albumview_expose_event), self);
     gtk_event_box_set_visible_window(GTK_EVENT_BOX(self->priv->event_bg), TRUE);
@@ -335,10 +315,10 @@ static void albumview_init(AlbumViewPlugin *self)
     g_signal_connect_object(G_OBJECT(self->priv->filter_entry), "key-press-event", G_CALLBACK(albumview_key_press_event), self,0);
     g_signal_connect_object(G_OBJECT(self->priv->event_bg), "button-press-event", G_CALLBACK(albumview_button_press_event), self,0);
 
-    gtk_widget_show_all(self->priv->albumview_main_box);	
+    gtk_widget_show_all(self->priv->albumview_main_box);
 
 
-    /* maintain my own reference to the widget, so it won't get destroyed removing 
+    /* maintain my own reference to the widget, so it won't get destroyed removing
      * from view
      */
     g_object_ref_sink(self->priv->albumview_main_box);
@@ -534,11 +514,7 @@ void update_finished(MpdData *data, AlbumViewPlugin *self)
         filter_list(GTK_ENTRY(self->priv->filter_entry), self);
 
         gtk_widget_grab_focus(self->priv->event_bg);
-     //   return FALSE;
     }
-
-  //  g_idle_add((GSourceFunc)load_list_itterate, self);
-   // return FALSE;
 }
 
 static void load_list(AlbumViewPlugin *self)
@@ -549,7 +525,7 @@ static void load_list(AlbumViewPlugin *self)
     self->priv->current_item = NULL;
 
 
-    self->priv->progress_bar = gtk_progress_bar_new(); 
+    self->priv->progress_bar = gtk_progress_bar_new();
     gtk_box_pack_start(GTK_BOX(self->priv->albumview_box), self->priv->progress_bar, FALSE, FALSE, 0);
     gtk_widget_show(self->priv->progress_bar);
     mpd_database_search_field_start(connection, MPD_TAG_ITEM_ALBUM);
@@ -609,7 +585,7 @@ static void album_replace(GtkWidget *button, mpd_Song *song)
     mpd_player_play(connection);
 }
 static gboolean album_button_press(GtkWidget *image, GtkMenu *menu, mpd_Song *song)
-{   
+{
     GtkWidget *item;
 
     item = gtk_image_menu_item_new_with_label("Album information");
@@ -646,12 +622,12 @@ static GtkWidget * create_button(AlbumViewPlugin *self, MpdData_real *complete_l
     vbox = gtk_vbox_new(FALSE, 3);
     gtk_widget_set_size_request(vbox, self->priv->album_size+20,self->priv->album_size+40);
 
-    item = gmpc_metaimage_new_size(META_ALBUM_ART,self->priv->album_size);
+    item = (GtkWidget *)gmpc_metaimage_new_size(META_ALBUM_ART,self->priv->album_size);
     gmpc_metaimage_set_scale_up(GMPC_METAIMAGE(item), TRUE);
     gtk_widget_set_has_tooltip(GTK_WIDGET(item), FALSE);
     gmpc_metaimage_set_squared(GMPC_METAIMAGE(item), TRUE);
 
-    gmpc_metaimage_update_cover_from_song_delayed(GMPC_METAIMAGE(item), complete_list_iter->song);                   
+    gmpc_metaimage_update_cover_from_song_delayed(GMPC_METAIMAGE(item), complete_list_iter->song);
 
     gtk_box_pack_start(GTK_BOX(vbox), item, TRUE, TRUE, 0);
     /* Set artist name */
@@ -675,13 +651,13 @@ static GtkWidget * create_button(AlbumViewPlugin *self, MpdData_real *complete_l
 
 
     /* Attach it to the song */
-    g_object_add_weak_pointer(vbox,&(complete_list_iter->userdata));
+    g_object_add_weak_pointer(G_OBJECT(vbox),&(complete_list_iter->userdata));
     complete_list_iter->userdata = vbox;//g_object_ref_sink(vbox);
     complete_list_iter->freefunc = (void *)gtk_widget_destroy;
     g_object_set_data(G_OBJECT(vbox), "item", item);
     g_signal_connect(G_OBJECT(item), "menu_populate_client", G_CALLBACK(album_button_press), complete_list_iter->song);
     /*
-    g_signal_connect(item, "button-press-event", 
+    g_signal_connect(item, "button-press-event",
             G_CALLBACK(album_button_press), complete_list_iter->song);
             */
     return vbox;
@@ -718,8 +694,8 @@ static void filter_list(GtkEntry *entry, gpointer data)
         if(regex)
         {
             g_string_free(s, TRUE);
-            for(complete_list_iter = (MpdData_real *) mpd_data_get_first(self->priv->complete_list); 
-                    complete_list_iter; 
+            for(complete_list_iter = (MpdData_real *) mpd_data_get_first(self->priv->complete_list);
+                    complete_list_iter;
                     complete_list_iter = (MpdData_real *)mpd_data_get_next_real((MpdData *)complete_list_iter, FALSE))
             {
                 if(g_regex_match(regex,complete_list_iter->song->album,0,NULL)||
@@ -738,33 +714,25 @@ static void filter_list(GtkEntry *entry, gpointer data)
     }
     if(self->priv->current_item) g_list_free(self->priv->current_item);
     self->priv->current_item = g_list_first(list);
-    if((items-self->priv->supported_rows*self->priv->supported_columns) > 0)
-    {
-        gtk_widget_set_sensitive(GTK_WIDGET(self->priv->slider_scale), TRUE);
-        gtk_range_set_range(GTK_RANGE(self->priv->slider_scale), 0, 
-                ((items-self->priv->supported_rows*self->priv->supported_columns)>0)?(items-self->priv->supported_rows*self->priv->supported_columns):1);
-    }
-    else{
-        gtk_widget_set_sensitive(GTK_WIDGET(self->priv->slider_scale), FALSE);
-        gtk_range_set_range(GTK_RANGE(self->priv->slider_scale), 0,1);
-    }
+    self->priv->require_scale_update = TRUE;
     gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), 0);
+
     update_view(self);
 }
 
 static void position_changed(GtkRange *range, gpointer data)
 {
     AlbumViewPlugin *self = ALBUM_VIEW_PLUGIN(data);
-    gint i=0,value = (int)gtk_range_get_value(range);
+    gint i=0,value = (int)gtk_range_get_value(range)*self->priv->supported_columns;
     self->priv->current_item = g_list_first(self->priv->current_item);
     for(i=0;i<value && self->priv->current_item && self->priv->current_item->next; self->priv->current_item = self->priv->current_item->next){i++;}
     update_view(self);
 }
 static gboolean update_view_real(AlbumViewPlugin *self)
 {
-    MpdData *complete_list_iter; 
+    MpdData *complete_list_iter;
     const char *search_query = gtk_entry_get_text(GTK_ENTRY(self->priv->filter_entry));
-    int i=0; 
+    int i=0;
     int j=0;
     gchar *artist= NULL;
     int items =0;
@@ -772,7 +740,7 @@ static gboolean update_view_real(AlbumViewPlugin *self)
     GList *entries = NULL;
     GList *list = (self->priv->item_table)?gtk_container_get_children(GTK_CONTAINER(self->priv->item_table)):NULL;
     GList *iter;
-    GRegex *regex = NULL;    
+    GRegex *regex = NULL;
 
     g_log(AV_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,"search query: %s\n", search_query);
 
@@ -788,60 +756,69 @@ static gboolean update_view_real(AlbumViewPlugin *self)
 
 
     gtk_widget_show(self->priv->albumview_box);
+
     if(self->priv->current_item ==  NULL){
         int items  =0;
-        for(complete_list_iter = mpd_data_get_first(self->priv->complete_list); 
-                complete_list_iter; 
+        for(complete_list_iter = mpd_data_get_first(self->priv->complete_list);
+                complete_list_iter;
                 complete_list_iter = mpd_data_get_next_real(complete_list_iter, FALSE))
         {
             items++;
-            self->priv->current_item = g_list_append(self->priv->current_item, complete_list_iter);
+            self->priv->current_item = g_list_prepend(self->priv->current_item, complete_list_iter);
         }
-        self->priv->current_item = g_list_first(self->priv->current_item);
-        if((items-self->priv->supported_rows*self->priv->supported_columns) > 0)
+        self->priv->current_item = g_list_reverse(self->priv->current_item);
+//        self->priv->current_item = g_list_first(self->priv->current_item);
+        gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), 0);
+        self->priv->require_scale_update = TRUE;
+    }
+    /* TODO: Only update this when something changed! */
+    if(self->priv->require_scale_update)
+    {
+        int items = g_list_length(g_list_first(self->priv->current_item));
+        if(ceil(items/(double)self->priv->supported_columns)-self->priv->supported_rows > 0)
         {
             gtk_widget_set_sensitive(GTK_WIDGET(self->priv->slider_scale), TRUE);
-            gtk_range_set_range(GTK_RANGE(self->priv->slider_scale), 0, 
-                    ((items-self->priv->supported_rows*self->priv->supported_columns)>0)?(items-self->priv->supported_rows*self->priv->supported_columns):1);
+            gtk_range_set_range(GTK_RANGE(self->priv->slider_scale), 0,
+                    ceil(items/(double)self->priv->supported_columns)-self->priv->supported_rows);
         }
         else{
             gtk_widget_set_sensitive(GTK_WIDGET(self->priv->slider_scale), FALSE);
             gtk_range_set_range(GTK_RANGE(self->priv->slider_scale), 0,1);
         }
-        gtk_range_set_value(GTK_RANGE(self->priv->slider_scale), 0);
+        self->priv->require_scale_update = FALSE;
     }
 
-    int rows = self->priv->supported_rows; 
     /**
-     * Create holding table if it does not exist 
+     * Create holding table if it does not exist
      */
     if(!self->priv->item_table){
-        GtkWidget *ali = gtk_alignment_new(0.0, 0.5, 0,0);
-        self->priv->item_table = exo_wrap_table_new(TRUE);//gtk_table_new(rows, supported_columns, TRUE);
-        gtk_container_add(GTK_CONTAINER(ali), self->priv->item_table);
-        gtk_box_pack_start(GTK_BOX(self->priv->albumview_box), ali, FALSE, FALSE, 0);
+        self->priv->item_table = (GtkWidget *)gmpc_widgets_qtable_new();
+        gmpc_widgets_qtable_set_item_width(GMPC_WIDGETS_QTABLE(self->priv->item_table),
+                self->priv->album_size+25);
+        gmpc_widgets_qtable_set_item_height(GMPC_WIDGETS_QTABLE(self->priv->item_table),
+                self->priv->album_size+40);
+        gtk_box_pack_start(GTK_BOX(self->priv->albumview_box), self->priv->item_table, TRUE, TRUE, 0);
     }
 
-    /* I know how large it is going to be.. so lets set the size */
-    gtk_widget_set_size_request(self->priv->item_table, self->priv->supported_columns*(self->priv->album_size+20)+6, (rows)*(self->priv->album_size+40));
     /**
-     * Add albums 
+     * Add albums
      */
 
-    if(self->priv->current_item)//(iter = g_list_first(list)))
+    if(self->priv->current_item)
     {
+        int rows = self->priv->supported_rows;
         GList *iter = self->priv->current_item;
         int v_items = 0;
         do
         {
             complete_list_iter = iter->data;
-            if(complete_list_iter->song/* && (complete_list_iter->song->artist)[0] != '\0'*/)
+            if(complete_list_iter->song)
             {
-                GtkWidget *vbox = complete_list_iter->userdata; 
+                GtkWidget *vbox = complete_list_iter->userdata;
                 GtkWidget *item;
                 int a,b;
                 if(vbox == NULL){
-                   vbox = create_button(self, (MpdData_real *)complete_list_iter); 
+                   vbox = create_button(self, (MpdData_real *)complete_list_iter);
                 }
                 else{
                     item = g_object_get_data(G_OBJECT(vbox), "item");
@@ -870,7 +847,7 @@ static gboolean update_view_real(AlbumViewPlugin *self)
 
     gtk_widget_show_all(self->priv->albumview_box);
     /**
-     * Remove the timeout 
+     * Remove the timeout
      */
     if(self->priv->update_timeout)
         g_source_remove(self->priv->update_timeout);
@@ -931,6 +908,7 @@ static GObject *albumview_plugin_constructor(GType type, guint n_construct_prope
     self->priv->item_table = NULL;
     self->priv->albumview_ref = NULL;
     self->priv->albumview_box = NULL;
+    self->priv->require_scale_update = FALSE;
 
     /* Watch status changed signals */
     g_signal_connect_object(G_OBJECT(gmpcconn), "connection-changed", G_CALLBACK(albumview_connection_changed), self, 0);
@@ -1000,7 +978,7 @@ const GType albumview_plugin_get_type(void) {
 		albumview_plugin_type_id = g_type_register_static(GMPC_PLUGIN_TYPE_BASE, "AlbumViewPlugin", &info, 0);
 
         /** Browser interface */
-		static const GInterfaceInfo iface_info = { (GInterfaceInitFunc) albumview_plugin_browser_iface_init, 
+		static const GInterfaceInfo iface_info = { (GInterfaceInitFunc) albumview_plugin_browser_iface_init,
             (GInterfaceFinalizeFunc) NULL, NULL};
 		g_type_add_interface_static (albumview_plugin_type_id, GMPC_PLUGIN_TYPE_BROWSER_IFACE, &iface_info);
 	}

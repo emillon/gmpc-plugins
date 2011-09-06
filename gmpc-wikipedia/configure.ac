@@ -4,7 +4,7 @@ m4_define([plugin_micro_version], [5])
 m4_define([plugin_nano_version], [0])
 m4_define([plugin_version],[plugin_major_version.plugin_minor_version.plugin_micro_version.plugin_nano_version])
 
-AC_INIT([gmpc-wikipedia], [0.19.101], [qball@sarine.nl])
+AC_INIT([gmpc-wikipedia], [0.20.95], [qball@sarine.nl])
 
 AC_CONFIG_AUX_DIR([.])
 AM_CONFIG_HEADER([config.h])
