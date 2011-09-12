@@ -6,7 +6,7 @@ DBG_NAME:=$(SRC_NAME)-dbg
 DEB_DH_STRIP_ARGS:=--dbg-package=$(DBG_NAME)
 
 %:
-	dh $@
+	dh --with autoreconf $@
 
 override_dh_strip:
 	dh_strip $(DEB_DH_STRIP_ARGS)

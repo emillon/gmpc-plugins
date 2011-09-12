@@ -5,6 +5,7 @@ Maintainer: Etienne Millon <etienne.millon@gmail.com>
 Standards-Version: 3.8.4
 Build-Depends:
  debhelper (>= 7.0.50~),
+ dh-autoreconf,
  libjson-glib-dev,
  gmpc-dev(>=0.20.0),
  libxosd-dev,
