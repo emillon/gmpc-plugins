@@ -15,16 +15,13 @@ Description: Plugins for the GNOME Music Player Client
   - alarm, allows basic events to be scheduled
   - avahi, zeroconf profile scanning
   - coveramazon, disc cover fetcher from the internet
-  - extraplaylist, adds a playlist viewer at the bottom of the interface.
   - jamendo, Jamendo stream browser
-  - last.fm, last.fm service support
   - lirc, remote control interface
   - lyrics, a lyrics fetcher from multiple sources
   - lyricwiki, add lyricwiki.org as lyrics source
   - magnatune, Magnatune stream browser
   - mdcover, display disc cover found in file metadata
   - osd, On screen display using xosd
-  - serverstats, displays some mpd statisics
   - shout, stream shout-cast
 
 Package: gmpc-plugins-dbg
