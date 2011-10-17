@@ -6,11 +6,9 @@ Subject: Add --as-needed to LDFLAGS
  Makefile.in |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Makefile.in b/Makefile.in
-index 8f0f345..10091ab 100644
 --- a/Makefile.in
 +++ b/Makefile.in
-@@ -121,7 +121,7 @@ INSTALL_DATA = @INSTALL_DATA@
+@@ -121,7 +121,7 @@
  INSTALL_PROGRAM = @INSTALL_PROGRAM@
  INSTALL_SCRIPT = @INSTALL_SCRIPT@
  INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
@@ -19,4 +17,3 @@ index 8f0f345..10091ab 100644
  LIBOBJS = @LIBOBJS@
  LIBS = @LIBS@
  LTLIBOBJS = @LTLIBOBJS@
--- 
