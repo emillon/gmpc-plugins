@@ -1,70 +1,67 @@
-This package was debianized by Arnaud Cornet <acornet@debian.org>
-on  Sun, 08 Feb 2009 14:05:38 +0100.
+Format: http://anonscm.debian.org/gitweb/?p=dbnpolicy/policy.git;a=blob;f=copyright-format/copyright-format.xml;hb=b4d036bab75ac794c3500563768d60ad994ae4f1
+Upstream-Name: gmpc-plugins
+Upstream-Contact: Qball Cow <qball@sarine.nl>
+Source: http://gmpc.wikia.com/wiki/Gnome_Music_Player_Client
 
-The current Debian maintainer is Arnaud Cornet <acornet@debian.org>.
+Files: debian/*
+License: GPL-2
+Copyright: 2009-2011 Arnaud Cornet <acornet@debian.org>
+           2011      Etienne Millon <etienne.millon@gmail.com>
 
-It was downloaded from http://gmpc.wikia.com/wiki/Gnome_Music_Player_Client
-Upstream Author: unknown
+Files: *.po
+License: GPL-2+
+Copyright: 2009 Rosetta Contributors and Canonical Ltd
 
-Copyright: 2009 Qball Cow <qball@sarine.nl> GPL 2 or higher
+Files: gmpc-alarm/*
+License: GPL-2+
+Copyright: 2008-2009 Qball Cow <qball@sarine.nl>
+           2006-2008 Gavin Gilmour <gavin@brokentrain.net>
 
-From a mail exchange with Qball:
-(From: Qball Cow <qball@sarine.nl>)
+Files: gmpc-albumview/*
+License: GPL-2+
+Copyright: 2011 Qball Cow <qball@sarine.nl>
+Comment: Confirmed by private email, next release will ship proper licensing
+         information.
 
-All the plugins are gpl and will stay gpl version 2 or higher.
+Files: gmpc-avahi/*
+License: GPL-2+
+Copyright: 2007-2009 Qball Cow <qball@sarine.nl>
+           2007      Jim Ramsay <i.am@jimramsay.com>
 
-gmpc-avahi is originally written by Jim Ramsey and later modified by me.
-gmpc-lyrics is originally written by Maxime Petazzoni and modified by me.
-gmpc-alarm is written by Gavin Gilmour and is now maintained by me.
-gmpc-lirc is written by Igor Stirbu and is now maintained by me.
+Files: gmpc-awn/*
+License: GPL-2+
+Copyright: 2007-2009 Qball Cow <qball@sarine.nl>
 
+Files: gmpc-jamendo/*
+License: GPL-2+
+Copyright: 2006-2009 Qball Cow <qball@sarine.nl>
 
-The rest of the plugins:
-gmpc-mdcover,
-gmpc-coveramazon,
-gmpc-lyricwiki,
-gmpc-discogs,
-gmpc-jamendo,
-gmpc-magnatune,
-gmpc-last.fm,
-gmpc-lastfmradio,
-gmpc-autoplaylist,
-gmpc-awn,
-gmpc-extraplaylist,
-gmpc-libnotify,
-gmpc-lyrdb
-gmpc-lyricwiki,
-gmpc-mdcover2,
-gmpc-mserver,
-gmpc-osd,
-gmpc-playlistsort,
-gmpc-shout,
-gmpc-stopbutton,
-gmpc-qosd,
-gmpc-random-playlist,
-gmpc-serverstats,
-gmpc-tagedit,
-gmpc-wikipedia,
-gmpc-fullscreeninfo
+Files: gmpc-lyrics/*
+License: GPL-2+
+Copyright: 2006-2009 Qball Cow <qball@sarine.nl>
+           2006 Maxime Petazzoni <maxime.petazzoni@bulix.org>
 
-, gmpc and libmpd are written by me, Martijn Koedam, under the gpl license.
-Gmpc-awn, gmpc-wikipedia and gmpc-fullscreeninfo are not maintained by me
-anymore.
+Files: gmpc-lyricwiki/*
+License: GPL-2+
+Copyright: 2008-2009 Qball Cow <qball@sarine.nl>
 
-gmpc contains (l)gpl code taken from libbacon, libegg and gtk.
-gmpc-mserver used to contain a copy of libmicrohttp, but that has been
-removed, gmpc-magnatune used to include a copy of axl xml library, but
-that also has been removed.
+Files: gmpc-magnatune/*
+License: GPL-2+
+Copyright: 2006-2009 Qball Cow <qball@sarine.nl>
 
-If you need a list off all contributors let me know. (but will take some
-time.)
+Files: gmpc-mmkeys/*
+License: GPL-2+
+Copyright: 2009 Qball Cow <qball@sarine.nl>
+Comment: Despite COPYING being GPLv3, author confirmed that GPL-2+ is intended.
 
-Hope this is sufficient and hopefully without stupid errors.
+Files: gmpc-shout/*
+License: GPL-2+
+Copyright: 2007-2009 Qball Cow <qball@sarine.nl>
 
-Qball
+Files: gmpc-tagedit/*
+License: GPL-2+
+Copyright: 2008-2009 Qball Cow <qball@sarine.nl>
 
-The Debian packaging is (C) 2009, Arnaud Cornet <acornet@debian.org> and 
-is licensed under the GPL version 2.
-
-On Debian systems, the complete text of the GNU General Public
-License, version 2, can be found in /usr/share/common-licenses/GPL-2.
+Files: gmpc-wikipedia/*
+License: GPL-2+
+Copyright: 2006-2009 Qball Cow <qball@sarine.nl>
