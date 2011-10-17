@@ -3,6 +3,7 @@ gmpc-plugins (11.8.16-1) unstable; urgency=low
   * New upstream release
   * New Maintainer (Closes: #641254)
   * Bump Standards-Version to 3.9.2 (no changes needed)
+  * New patch fixing a typo ("Psychedelic")
 
  -- Etienne Millon <etienne.millon@gmail.com>  Mon, 17 Oct 2011 14:14:10 +0200
 
