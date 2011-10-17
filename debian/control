@@ -52,7 +52,4 @@ Priority: extra
 Architecture: any
 Depends: gmpc-plugins (= ${binary:Version}), ${misc:Depends}, gmpc-dbg
 Description: Plugins for the GNOME Music Player Client
- gmpc-plugins is a set of plugins that enhance functionality of the GNOME
- Music Player Clients.
- .
- This package contains the debugging symbols.
+ Debugging symbols for gmpc-plugins.
