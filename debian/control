@@ -7,7 +7,7 @@ Build-Depends:
  debhelper (>= 7.0.50~),
  gmpc-dev (>=11.8.16),
  gob2,
- intltool (>> 0.21),
+ intltool,
  libavahi-client-dev,
  libavahi-glib-dev,
  libcurl4-gnutls-dev,
