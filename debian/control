@@ -6,7 +6,7 @@ Standards-Version: 3.9.2
 Build-Depends:
  debhelper (>= 7.0.50~),
  libjson-glib-dev,
- gmpc-dev(>=0.20.0),
+ gmpc-dev (>=11.8.16),
  libxosd-dev,
  gob2,
  libgtk2.0-dev,
