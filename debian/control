@@ -22,9 +22,9 @@ Build-Depends:
  libsoup2.4-dev,
  libsqlite3-dev,
  libtagc0-dev,
- libwebkit-dev,
  libxml2-dev,
  libxosd-dev,
+ libwebkitgtk-dev,
  valac (>= 0.7.10)
 Homepage: http://gmpc.wikia.com/
 
