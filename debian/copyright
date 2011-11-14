@@ -4,7 +4,7 @@ Upstream-Contact: Qball Cow <qball@sarine.nl>
 Source: http://gmpc.wikia.com/wiki/Gnome_Music_Player_Client
 
 Files: debian/*
-License: GPL-2
+License: GPL-2+
 Copyright: 2009-2011 Arnaud Cornet <acornet@debian.org>
            2011      Etienne Millon <etienne.millon@gmail.com>
 
