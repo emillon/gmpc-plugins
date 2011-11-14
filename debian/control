@@ -27,6 +27,8 @@ Build-Depends:
  libwebkitgtk-dev,
  valac (>= 0.7.10)
 Homepage: http://gmpc.wikia.com/
+Vcs-Git: git://anonscm.debian.org/pkg-mpd/gmpc-plugins.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-mpd/gmpc-plugins.git
 
 Package: gmpc-plugins
 Architecture: any
