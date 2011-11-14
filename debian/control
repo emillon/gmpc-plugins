@@ -51,5 +51,6 @@ Section: debug
 Priority: extra
 Architecture: any
 Depends: gmpc-plugins (= ${binary:Version}), ${misc:Depends}, gmpc-dbg
-Description: Plugins for the GNOME Music Player Client
- Debugging symbols for gmpc-plugins.
+Description: Plugins for the GNOME Music Player Client (debugging symbols)
+ This package contains debugging symbols for gmpc-plugins, which can be used
+ to analyze crashes in gmpc.
