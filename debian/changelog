@@ -1,6 +1,7 @@
 gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
 
   * Rename build-dep from libwebkit-dev to libwebkitgtk-dev (Closes: #635410)
+  * Bump debhelper compat level to 9
 
  -- Etienne Millon <etienne.millon@gmail.com>  Mon, 07 Nov 2011 17:30:17 +0100
 
