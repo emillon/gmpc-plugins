@@ -4,7 +4,7 @@ Subject: Fix typo : Psychadelic -> Psychedelic
 
 ---
  gmpc-jamendo/src/jamendo.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/gmpc-jamendo/src/jamendo.c b/gmpc-jamendo/src/jamendo.c
 index 2dbb4f1..6dcc296 100644
@@ -19,4 +19,3 @@ index 2dbb4f1..6dcc296 100644
  "Showtunes ", "Trailer ", "Lo-Fi ", "Tribal ", "Acid Punk ", "Acid Jazz ", "Polka ",
  "Retro ", "Musical ", "Rock & Roll ", "Hard Rock ", "Folk ", "Folk-Rock ", "National Folk ",
  "Swing ", "Fast Fusion ", "Bebob ", "Latin ", "Revival ", "Celtic ", "Bluegrass ",
--- 
