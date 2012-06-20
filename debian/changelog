@@ -5,6 +5,7 @@ gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
     - Use multi-arch directories
     - Enable hardening flags
   * Use dh-autoreconf
+  * New patch setting correct directory for gmpc-awn
 
  -- Etienne Millon <etienne.millon@gmail.com>  Mon, 07 Nov 2011 17:30:17 +0100
 

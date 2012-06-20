@@ -1,0 +1,19 @@
+From: Etienne Millon <me@emillon.org>
+Date: Wed, 20 Jun 2012 13:27:51 +0200
+Subject: Correct directory for gmpc-awn
+
+Without this plugin, it would install its libraries to /usr/lib.
+---
+ gmpc-awn/src/Makefile.am |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gmpc-awn/src/Makefile.am b/gmpc-awn/src/Makefile.am
+index e4a6479..6ebb3d2 100644
+--- a/gmpc-awn/src/Makefile.am
++++ b/gmpc-awn/src/Makefile.am
+@@ -1,4 +1,4 @@
+-libdir=${prefix}/lib/gmpc/plugins/
++plugindir=${libdir}/gmpc/plugins/
+ 
+ lib_LTLIBRARIES = awnplugin.la
+ 
