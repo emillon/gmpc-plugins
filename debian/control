@@ -5,6 +5,7 @@ Maintainer: Etienne Millon <etienne.millon@gmail.com>
 Standards-Version: 3.9.2
 Build-Depends:
  debhelper (>= 9),
+ dh-autoreconf,
  gmpc-dev (>=11.8.16),
  gob2,
  intltool,

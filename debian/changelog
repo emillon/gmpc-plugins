@@ -4,6 +4,7 @@ gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
   * Bump debhelper compat level to 9
     - Use multi-arch directories
     - Enable hardening flags
+  * Use dh-autoreconf
 
  -- Etienne Millon <etienne.millon@gmail.com>  Mon, 07 Nov 2011 17:30:17 +0100
 
