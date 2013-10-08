@@ -33,7 +33,7 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-mpd/gmpc-plugins.git
 
 Package: gmpc-plugins
 Architecture: any
-Depends: gmpc (>= 11.8.16), ${misc:Depends}, ${shlibs:Depends}
+Depends: gmpc (>= 11.8.16-7), ${misc:Depends}, ${shlibs:Depends}
 Description: Plugins for the GNOME Music Player Client
  gmpc-plugins is a set of plugins that enhance functionality of the GNOME
  Music Player Clients. Plugins are:
