@@ -1,5 +1,6 @@
 gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
 
+  * Disable LyricWiki plugin (Closes: #539821)
   * Rename build-dep from libwebkit-dev to libwebkitgtk-dev
   * Bump debhelper compat level to 9
     - Use multi-arch directories
