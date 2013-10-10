@@ -8,6 +8,7 @@ gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
   * Use dh-autoreconf
   * New patch setting correct directory for gmpc-awn
   * Bump Standards-Version to 3.9.4 (no changes needed)
+  * Update my email address
 
  -- Etienne Millon <etienne.millon@gmail.com>  Mon, 07 Nov 2011 17:30:17 +0100
 
