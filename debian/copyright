@@ -1,4 +1,4 @@
-Format: http://anonscm.debian.org/gitweb/?p=dbnpolicy/policy.git;a=blob;f=copyright-format/copyright-format.xml;hb=b4d036bab75ac794c3500563768d60ad994ae4f1
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: gmpc-plugins
 Upstream-Contact: Qball Cow <qball@sarine.nl>
 Source: http://gmpc.wikia.com/wiki/Gnome_Music_Player_Client
