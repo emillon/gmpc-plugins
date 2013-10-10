@@ -1,4 +1,4 @@
-gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
+gmpc-plugins (11.8.16-2) unstable; urgency=low
 
   * Disable LyricWiki plugin (Closes: #539821)
   * Rename build-dep from libwebkit-dev to libwebkitgtk-dev
@@ -11,7 +11,7 @@ gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
   * Drop version bounds satisfied in oldstable
   * Update DEP5 URL
 
- -- Etienne Millon <etienne.millon@gmail.com>  Mon, 07 Nov 2011 17:30:17 +0100
+ -- Etienne Millon <me@emillon.org>  Sun, 13 Oct 2013 12:47:44 +0200
 
 gmpc-plugins (11.8.16-1) unstable; urgency=low
 
