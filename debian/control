@@ -18,15 +18,15 @@ Build-Depends:
  libicu-dev,
  libjson-glib-dev,
  liblircclient-dev,
- libmicrohttpd-dev (>= 0.4.0a-2),
- libmpd-dev (>=0.15.98),
+ libmicrohttpd-dev,
+ libmpd-dev,
  libsoup2.4-dev,
  libsqlite3-dev,
  libtagc0-dev,
  libwebkitgtk-dev,
  libxml2-dev,
  libxosd-dev,
- valac (>= 0.7.10)
+ valac
 Homepage: http://gmpc.wikia.com/
 Vcs-Git: git://anonscm.debian.org/pkg-mpd/gmpc-plugins.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-mpd/gmpc-plugins.git
