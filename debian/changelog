@@ -6,7 +6,6 @@ gmpc-plugins (11.8.16-2) UNRELEASED; urgency=low
     - Use multi-arch directories
     - Enable hardening flags
   * Use dh-autoreconf
-  * New patch setting correct directory for gmpc-awn
   * Bump Standards-Version to 3.9.4 (no changes needed)
   * Update my email address
   * Drop version bounds satisfied in oldstable
